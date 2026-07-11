@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ============ PRIMARY SEO ============ -->
+<title>Essentials | Water Management & Parking Solutions in Gurgaon</title>
+<meta name="description" content="Essentials provides reliable water management and organised parking solutions for societies, businesses, and local communities in Gurgaon & NCR. Get in touch today." />
+<meta name="keywords" content="water management, parking services, water supply, tank cleaning, parking management, society services, Gurgaon, NCR, civic services, facility management" />
+<meta name="author" content="Essentials" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="canonical" href="https://www.essentials.example/" />
+
+<!-- ============ OPEN GRAPH ============ -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Essentials" />
+<meta property="og:title" content="Essentials | Water Management & Parking Solutions" />
+<meta property="og:description" content="Reliable water management and organised parking solutions for societies, businesses, and communities in Gurgaon & NCR." />
+<meta property="og:url" content="https://www.essentials.example/" />
+<meta property="og:locale" content="en_IN" />
+<meta property="og:image" content="https://www.essentials.example/og-image.jpg" />
+<meta property="og:image:alt" content="Essentials — water and parking solutions" />
+
+<!-- ============ TWITTER CARD ============ -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Essentials | Water & Parking Solutions" />
+<meta name="twitter:description" content="Reliable water management and organised parking solutions in Gurgaon & NCR." />
+<meta name="twitter:image" content="https://www.essentials.example/og-image.jpg" />
+
+<!-- ============ STRUCTURED DATA ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Essentials",
+  "description": "Water management and parking solutions for societies, businesses, and communities.",
+  "url": "https://www.essentials.example/",
+  "telephone": "+91-89509-98004",
+  "email": "Myessentials.global@gmail.com",
+  "areaServed": { "@type": "City", "name": "Gurgaon" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Gurgaon", "addressRegion": "Haryana", "addressCountry": "IN" },
+  "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "09:00", "closes": "19:00" },
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Water Management", "description": "Water supply scheduling, tank cleaning, quality testing, and usage monitoring." } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Parking Services", "description": "Parking planning, slot allocation, signage, and on-ground flow management." } }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     ELEGANT LIGHT THEME — soft whites, restrained teal, serif display
+     ============================================================ */
+  :root, [data-theme="light"]{
+    --ink:#2a2b28;        /* warm soft charcoal */
+    --ink-soft:#6f6a60;   /* warm muted grey text */
+    --brand:#3a7772;      /* restrained deep teal (AA-compliant) */
+    --brand-deep:#2f5f5b;
+    --gold:#a8894f;       /* warm muted gold */
+    --stone:#f3eee5;      /* warm sand section */
+    --paper:#faf6ef;      /* warm ivory page */
+    --paper-2:#f6f0e6;    /* second ivory tone for gradient */
+    --line:#e6ded1;       /* warm hairline */
+    --card:#fffdf9;       /* creamy card, slightly off page */
+    --shadow:0 10px 40px rgba(42,43,40,.07);
+  }
+  [data-theme="dark"]{
+    --ink:#e9e6df; --ink-soft:#a9a49a; --brand:#6ba8a2; --brand-deep:#8bc0ba;
+    --gold:#c9a877; --stone:#20242a; --paper:#171b20; --line:#2b3138; --card:#1d222808;
+    --card:#1e2329; --paper-2:#141a1f; --shadow:0 10px 40px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+
+  /* Accessibility: skip link */
+  .skip{
+    position:absolute;left:-999px;top:0;z-index:100;
+    background:var(--brand);color:#fff;padding:12px 20px;border-radius:0 0 4px 0;
+    font-weight:600;text-decoration:none
+  }
+  .skip:focus{left:0}
+
+  /* Accessibility: clear keyboard focus on every interactive element */
+  a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+    outline:3px solid var(--brand);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+  /* Screen-reader-only utility */
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0
+  }
+  body{
+    font-family:"Inter",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    background-image:radial-gradient(1200px 600px at 50% -10%, var(--paper-2), transparent 70%);
+    background-attachment:fixed;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    transition:background .3s ease, color .3s ease;
+  }
+  h1,h2,h3,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.12;letter-spacing:.005em}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  header{
+    position:sticky;top:0;z-index:40;
+    background:color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .bar{display:flex;align-items:center;justify-content:space-between;height:70px;gap:12px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.5rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+  .brand .dot{
+    width:32px;height:32px;border-radius:50%;
+    border:1.5px solid var(--brand);
+    display:grid;place-items:center;color:var(--brand);font-size:1.05rem;background:transparent
+  }
+  .head-actions{display:flex;align-items:center;gap:10px}
+  .theme-btn{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);cursor:pointer;font-size:1rem;
+    display:grid;place-items:center;transition:.2s
+  }
+  .theme-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .nav-cta{
+    background:transparent;color:var(--brand);border:1px solid var(--brand);
+    padding:9px 20px;border-radius:2px;font-weight:500;font-size:.9rem;letter-spacing:.02em;
+    cursor:pointer;transition:.2s;font-family:"Inter",sans-serif
+  }
+  .nav-cta:hover{background:var(--brand);color:#fff}
+
+  .hero{padding:88px 0 56px;text-align:center}
+  .eyebrow{
+    display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--brand);margin-bottom:26px
+  }
+  .eyebrow::before,.eyebrow::after{content:"—";opacity:.4;margin:0 10px}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.2rem);max-width:14ch;margin:0 auto 22px;color:var(--ink)}
+  .hero p{font-size:1.12rem;color:var(--ink-soft);max-width:50ch;margin:0 auto 34px;font-weight:400}
+  .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn-primary{
+    background:var(--brand);color:#fff;border:1px solid var(--brand);padding:14px 30px;
+    border-radius:2px;font-weight:500;font-size:.95rem;letter-spacing:.02em;cursor:pointer;transition:.2s;font-family:"Inter",sans-serif
+  }
+  .btn-primary:hover{background:var(--brand-deep);border-color:var(--brand-deep)}
+  .btn-ghost{
+    background:transparent;color:var(--ink);border:1px solid var(--line);
+    padding:14px 30px;border-radius:2px;font-weight:500;font-size:.95rem;letter-spacing:.02em;cursor:pointer;transition:.2s;font-family:"Inter",sans-serif
+  }
+  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+
+  .services{padding:40px 0 64px}
+  .sec-head{text-align:center;margin-bottom:38px}
+  .sec-head h2{font-size:2.4rem;margin-bottom:8px;color:var(--ink)}
+  .sec-head p{color:var(--ink-soft)}
+
+  .carousel{position:relative}
+  .track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 24px;scrollbar-width:none}
+  .track::-webkit-scrollbar{display:none}
+  .card{
+    scroll-snap-align:center;flex:0 0 88%;max-width:350px;
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s
+  }
+  @media(min-width:720px){.card{flex:0 0 350px}}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(44,51,57,.10)}
+  .card-top{height:160px;display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line)}
+  .card-top.water{background:linear-gradient(160deg,#f0f5f4,#e0ecea)}
+  .card-top.parking{background:linear-gradient(160deg,#f6f2ea,#efe7d6)}
+  .card-top.more{background:linear-gradient(160deg,#f2f3f4,#e7e9ea)}
+  .card-top svg{width:52px;height:52px}
+  .card-top.water svg{color:var(--brand)}
+  .card-top.parking svg{color:var(--gold)}
+  .card-top.more svg{color:var(--ink-soft)}
+  .card-body{padding:24px}
+  .card-body h3{font-size:1.6rem;margin-bottom:6px;color:var(--ink)}
+  .card-body p{color:var(--ink-soft);font-size:.95rem;margin-bottom:16px}
+  .card-link{font-weight:500;color:var(--brand);font-size:.88rem;letter-spacing:.03em;text-transform:uppercase}
+
+  .arrows{display:flex;gap:10px;justify-content:center;margin-top:6px}
+  .arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:1.2rem;color:var(--ink);transition:.2s}
+  .arrow:hover{border-color:var(--brand);color:var(--brand)}
+
+  .detail{max-width:800px;margin:0 auto 16px;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .detail summary{list-style:none;cursor:pointer;padding:24px 26px;display:flex;align-items:center;gap:16px;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.5rem;color:var(--ink)}
+  .detail summary::-webkit-details-marker{display:none}
+  .detail .chev{margin-left:auto;transition:transform .25s;color:var(--ink-soft);font-size:1rem}
+  .detail[open] .chev{transform:rotate(180deg)}
+  .badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--line)}
+  .badge.water svg{color:var(--brand)}
+  .badge.parking svg{color:var(--gold)}
+  .detail-body{padding:0 26px 26px 84px}
+  .detail-body p{color:var(--ink-soft);margin-bottom:18px}
+  .detail-body h4{margin:16px 0 10px;font-family:"Inter",sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--brand);font-weight:600}
+  .feature-list{list-style:none;display:grid;gap:12px}
+  .feature-list li{display:flex;gap:12px;color:var(--ink-soft);font-size:.96rem}
+  .feature-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;margin-top:9px}
+  .detail-body .btn-primary{margin-top:22px;font-size:.9rem;padding:12px 26px}
+
+  .trust{background:var(--stone);padding:56px 0;text-align:center;margin-top:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust-grid{display:grid;gap:28px;grid-template-columns:1fr;max-width:660px;margin:24px auto 0}
+  @media(min-width:640px){.trust-grid{grid-template-columns:repeat(3,1fr)}}
+  .trust-item h3{font-size:2.6rem;color:var(--brand);margin-bottom:4px}
+  .trust-item p{color:var(--ink-soft);font-size:.9rem}
+
+  footer{background:var(--ink);color:var(--paper);padding:52px 0 32px;font-size:.92rem}
+  [data-theme="dark"] footer{background:#0e1215;color:#a9a49a}
+  .foot-grid{display:grid;gap:28px;grid-template-columns:1fr}
+  @media(min-width:640px){.foot-grid{grid-template-columns:2fr 1fr 1fr}}
+  footer h4{color:#fff;margin-bottom:12px;font-family:"Inter",sans-serif;font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;opacity:.7;font-weight:600}
+  footer a{color:inherit;text-decoration:none;display:block;margin-bottom:7px;opacity:.85}
+  footer a:hover{opacity:1}
+  .foot-brand{display:flex;align-items:center;gap:11px;font-family:"Cormorant Garamond",serif;font-weight:600;color:#fff;font-size:1.4rem;margin-bottom:12px}
+  .foot-brand .dot{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);display:grid;place-items:center;color:#fff}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:30px;padding-top:18px;text-align:center;opacity:.6;font-size:.84rem}
+
+  .fab{position:fixed;right:22px;bottom:22px;z-index:50;background:var(--brand);color:#fff;border:none;padding:14px 24px;border-radius:2px;font-weight:500;font-size:.95rem;letter-spacing:.02em;box-shadow:0 10px 30px rgba(63,125,120,.35);cursor:pointer;display:flex;align-items:center;gap:9px;transition:.2s;font-family:"Inter",sans-serif}
+  .fab:hover{background:var(--brand-deep);transform:translateY(-2px)}
+
+  .overlay[hidden]{display:none!important}
+  .overlay{position:fixed;inset:0;z-index:60;background:rgba(30,35,40,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border-radius:10px;max-width:420px;width:100%;padding:26px 24px;box-shadow:0 24px 70px rgba(0,0,0,.28);animation:pop .3s ease;max-height:88vh;overflow-y:auto}
+  @keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal h3{font-size:1.6rem;margin-bottom:4px;color:var(--ink)}
+  .modal .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:8px}
+  .qref{background:var(--stone);border-radius:6px;padding:9px 13px;font-size:.82rem;color:var(--ink-soft);margin-bottom:16px;border:1px solid var(--line)}
+  .qref b{color:var(--ink);font-family:ui-monospace,monospace}
+  .opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:13px;margin-bottom:10px;cursor:pointer;transition:.2s;text-decoration:none;color:var(--ink)}
+  .opt:hover{border-color:var(--brand);background:var(--stone)}
+  .opt .ico{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .opt .ico.wa{background:#25d366}
+  .opt .ico.em{background:var(--brand)}
+  .opt .ico svg{width:21px;height:21px;fill:#fff}
+  .opt-txt strong{display:block;font-size:1rem;font-weight:600;line-height:1.3}
+  .opt-txt span{font-size:.83rem;color:var(--ink-soft);line-height:1.3}
+  .modal-close{background:none;border:none;font-size:.9rem;color:var(--ink-soft);cursor:pointer;width:100%;margin-top:4px;padding:8px}
+  .email-fallback{background:var(--stone);border:1px solid var(--line);border-radius:8px;padding:14px;margin:2px 0 10px;text-align:center}
+  .ef-note{font-size:.82rem;color:var(--ink-soft);margin-bottom:8px}
+  .ef-addr{font-size:.92rem;font-weight:600;color:var(--ink);word-break:break-all;margin-bottom:4px}
+  .ef-ref{font-size:.78rem;color:var(--ink-soft);margin-bottom:10px}
+  .ef-ref b{color:var(--ink);font-family:ui-monospace,monospace}
+  .ef-copy{background:var(--brand);color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:.85rem;font-weight:500;cursor:pointer;transition:.2s;font-family:"Inter",sans-serif}
+  .ef-copy:hover{background:var(--brand-deep)}
+  .modal-close:hover{color:var(--ink)}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#services">Skip to services</a>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Essentials home"><span class="dot">≈</span> Essentials</a>
+    <div class="head-actions">
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Switch to dark theme" aria-pressed="false" title="Switch theme"><span aria-hidden="true">🌙</span></button>
+      <button class="nav-cta" onclick="openModal()">Raise a Query</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Reliable civic solutions</span>
+    <h1>Essential services, handled with care</h1>
+    <p>We help residential societies, businesses, and local bodies manage water and parking — the everyday things that keep a place running smoothly.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollToServices()">View our services</button>
+      <button class="btn-ghost" onclick="openModal()">Talk to us</button>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services" aria-label="Our services">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What we offer</h2>
+      <p>Explore our services — select any card to learn more.</p>
+    </div>
+    <div class="carousel">
+      <div class="track" id="track">
+        <article class="card" role="button" tabindex="0" onclick="openDetail('d-water')" onkeydown="cardKey(event,'d-water')" aria-label="Water Management — learn more">
+          <div class="card-top water"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Water droplet"><path d="M12 3c0 0 5.5 5.8 5.5 10.2a5.5 5.5 0 0 1-11 0C6.5 8.8 12 3 12 3z"/><path d="M9.5 13.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></div>
+          <div class="card-body"><h3>Water Management</h3><p>Smart supply, storage, and quality monitoring so clean water is always available.</p><span class="card-link">Learn more →</span></div>
+        </article>
+        <article class="card" role="button" tabindex="0" onclick="openDetail('d-parking')" onkeydown="cardKey(event,'d-parking')" aria-label="Parking Services — learn more">
+          <div class="card-top parking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Parking"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></div>
+          <div class="card-body"><h3>Parking Services</h3><p>Organised, hassle-free parking for societies, offices, and commercial spaces.</p><span class="card-link">Learn more →</span></div>
+        </article>
+        <article class="card" role="button" tabindex="0" onclick="openModal()" onkeydown="cardKey(event,null,true)" aria-label="Need something else — ask us">
+          <div class="card-top more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" role="img" aria-label="More services"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="card-body"><h3>Need something else?</h3><p>Growing our offerings. Tell us what you need and we'll see how we can help.</p><span class="card-link">Ask us →</span></div>
+        </article>
+      </div>
+    </div>
+    <div class="arrows">
+      <button class="arrow" onclick="slide(-1)" aria-label="Previous service">‹</button>
+      <button class="arrow" onclick="slide(1)" aria-label="Next service">›</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-bottom:44px" id="details" aria-label="Service details">
+  <details class="detail" id="d-water">
+    <summary><span class="badge water"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c0 0 5.5 5.8 5.5 10.2a5.5 5.5 0 0 1-11 0C6.5 8.8 12 3 12 3z"/></svg></span>Water Management<span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="detail-body">
+      <p>We keep water flowing reliably and safely. From storage tank upkeep to supply scheduling and quality checks, we handle the details so residents and businesses never have to think twice about it.</p>
+      <h4>What's included</h4>
+      <ul class="feature-list">
+        <li>Water supply scheduling and distribution planning</li>
+        <li>Tank cleaning, maintenance, and leak detection</li>
+        <li>Basic water quality testing and reporting</li>
+        <li>Usage monitoring to reduce wastage and cost</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('Water Management')">Enquire about water services</button>
+    </div>
+  </details>
+  <details class="detail" id="d-parking">
+    <summary><span class="badge parking"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></span>Parking Services<span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="detail-body">
+      <p>Parking chaos is one of the most common everyday frustrations. We bring order to it — clear allocation, smooth flow, and a system residents and visitors actually understand.</p>
+      <h4>What's included</h4>
+      <ul class="feature-list">
+        <li>Parking space planning and slot allocation</li>
+        <li>Visitor and resident parking coordination</li>
+        <li>Signage, markings, and flow management</li>
+        <li>On-ground support for smooth day-to-day running</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('Parking Services')">Enquire about parking services</button>
+    </div>
+  </details>
+</section>
+
+<section class="trust" aria-label="Why choose us">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0">
+      <h2>A fresh start, built on doing things right</h2>
+      <p>We're a new business — which means every client gets our full attention.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item"><h3>2</h3><p>Core services, done well</p></div>
+      <div class="trust-item"><h3>1:1</h3><p>Personal attention on every project</p></div>
+      <div class="trust-item"><h3>&lt;24h</h3><p>Typical response to queries</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand"><span class="dot">≈</span> Essentials</div>
+      <p style="max-width:34ch;opacity:.85">Water and parking solutions for societies, businesses, and local communities.</p>
+    </div>
+    <div><h4>Contact</h4><a href="tel:+918950998004">+91 89509 98004</a><a href="tel:+918950438004">+91 89504 38004</a><a href="mailto:Myessentials.global@gmail.com">Myessentials.global@gmail.com</a></div>
+    <div><h4>Details</h4><a>Serving: Gurgaon &amp; NCR</a><a>Hours: Mon–Sat, 9am–7pm</a></div>
+  </div>
+  <div class="wrap foot-bottom">© 2026 Essentials. All rights reserved.</div>
+</footer>
+
+<button class="fab" onclick="openModal()" aria-label="Raise a query — contact us"><svg viewBox="0 0 24 24" width="19" fill="#fff" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6-.2 1.4-.9 2.6-1.4 3.4-.2.3.1.7.5.6 2-.5 3.6-1.3 4.7-2 1 .3 1.9.4 2.8.4 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg>Raise a Query</button>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <h3 id="modalTitle">How can we help?</h3>
+    <p class="sub" id="modalDesc">Choose how you'd like to reach us.</p>
+    <div class="qref">Your reference number: <b id="qref">—</b></div>
+    <a class="opt" id="waOpt" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp"><span class="ico wa" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6-.2 1.4-.9 2.6-1.4 3.4-.2.3.1.7.5.6 2-.5 3.6-1.3 4.7-2 1 .3 1.9.4 2.8.4 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg></span><span class="opt-txt"><strong>WhatsApp us</strong><span>Chat instantly</span></span></a>
+    <button class="opt" id="emOpt" type="button" onclick="handleEmail()" aria-label="Contact us by email"><span class="ico em" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 3.4V18h16V7.4l-8 5-8-5z"/></svg></span><span class="opt-txt"><strong>Email us</strong><span>Opens your mail app, pre-filled</span></span></button>
+    <div class="email-fallback" id="emailFallback" hidden>
+      <p class="ef-note">If your mail app didn't open, email us directly:</p>
+      <p class="ef-addr" id="efAddr">Myessentials.global@gmail.com</p>
+      <p class="ef-ref">Subject reference: <b id="efRef">—</b></p>
+      <button class="ef-copy" type="button" onclick="copyEmail()" id="efCopyBtn">Copy email address</button>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+  const CONFIG = { whatsapp:"918950998004", email:"Myessentials.global@gmail.com", business:"Essentials" };
+  const EMAIL = { gmailWeb:'', mailto:'', ref:'' };
+
+  const themeBtn = document.getElementById('themeBtn');
+  function setTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+    const dark = t==='dark';
+    themeBtn.innerHTML = '<span aria-hidden="true">'+(dark?'☀️':'🌙')+'</span>';
+    themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    document.querySelector('meta[name=theme-color]').setAttribute('content', dark ? '#171b20' : '#faf6ef');
+    document.cookie = "theme="+t+";path=/;max-age=31536000;SameSite=Lax";
+  }
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(cur==='dark' ? 'light' : 'dark');
+  }
+  (function initTheme(){
+    // Light is always the default. Dark only if the visitor chose it before.
+    const m = document.cookie.match(/(?:^|; )theme=([^;]+)/);
+    setTheme(m ? m[1] : 'light');
+  })();
+
+  const track = document.getElementById('track');
+  function slide(dir){ const c=track.querySelector('.card'); track.scrollBy({left:dir*(c.offsetWidth+24),behavior:'smooth'}); }
+  function scrollToServices(){ document.getElementById('services').scrollIntoView({behavior:'smooth'}); }
+  function openDetail(id){ const el=document.getElementById(id); el.open=true; el.scrollIntoView({behavior:'smooth',block:'center'}); }
+  function cardKey(e, id, isModal){
+    if(e.key==='Enter' || e.key===' '){
+      e.preventDefault();
+      isModal ? openModal() : openDetail(id);
+    }
+  }
+
+  function makeRef(){
+    const d=new Date();
+    const ymd=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+    return `QRY-${ymd}-${Math.floor(1000+Math.random()*9000)}`;
+  }
+
+  const overlay=document.getElementById('overlay');
+  let lastFocused=null;
+  function openModal(service){
+    const ref=makeRef();
+    document.getElementById('qref').textContent=ref;
+    const svc = service ? ` regarding ${service}` : '';
+    const subject = `New Query [${ref}]${service ? ' - ' + service : ''}`;
+    const bodyText =
+      `Hello ${CONFIG.business},\n\n` +
+      `I'd like to raise a query${svc}.\n\n` +
+      `Reference number: ${ref}\n\n` +
+      `My message:\n\n\n` +
+      `---\nName:\nPhone:\n`;
+
+    // WhatsApp
+    const waMsg = `Hi ${CONFIG.business}, I'd like to raise a query${svc}. My reference number is ${ref}.`;
+    document.getElementById('waOpt').href =
+      `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(waMsg)}`;
+
+    // Email — store both URLs; handleEmail() picks the method and shows a copy fallback.
+    const enc = { su: encodeURIComponent(subject), body: encodeURIComponent(bodyText) };
+    EMAIL.gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONFIG.email)}&su=${enc.su}&body=${enc.body}`;
+    EMAIL.mailto = `mailto:${CONFIG.email}?subject=${enc.su}&body=${enc.body}`;
+    EMAIL.ref = ref;
+
+    // Reset the fallback panel each time the modal opens
+    const fb = document.getElementById('emailFallback');
+    fb.hidden = true;
+    document.getElementById('efRef').textContent = ref;
+    document.getElementById('efCopyBtn').textContent = 'Copy email address';
+
+    lastFocused=document.activeElement;
+    overlay.hidden=false;
+    overlay.classList.add('show');
+    // move focus into the dialog
+    overlay.querySelector('.opt').focus();
+  }
+
+  // Try to open the user's mail app; reveal the copy fallback so they're never stuck.
+  function handleEmail(){
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    try {
+      if (isMobile) {
+        window.location.href = EMAIL.mailto;      // hand off to the mail app
+      } else {
+        window.open(EMAIL.gmailWeb, '_blank', 'noopener'); // desktop: Gmail compose
+      }
+    } catch(e){ /* ignore — fallback below covers it */ }
+    // Always reveal the fallback (in case nothing opened) after a short beat
+    const fb = document.getElementById('emailFallback');
+    setTimeout(()=>{ fb.hidden = false; fb.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 400);
+  }
+
+  // Copy the email address (with reference) to the clipboard.
+  function copyEmail(){
+    const btn = document.getElementById('efCopyBtn');
+    const text = CONFIG.email;
+    const done = ()=>{ btn.textContent = 'Copied ✓'; setTimeout(()=>{ btn.textContent='Copy email address'; }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(()=>legacyCopy(text, done));
+    } else { legacyCopy(text, done); }
+  }
+  function legacyCopy(text, done){
+    const t = document.createElement('textarea');
+    t.value = text; t.style.position='fixed'; t.style.opacity='0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(t);
+  }
+  function closeModal(){
+    overlay.classList.remove('show');
+    overlay.hidden=true;
+    if(lastFocused) lastFocused.focus();  // return focus to trigger
+  }
+  // Keyboard: Escape closes; Tab is trapped inside the open dialog
+  document.addEventListener('keydown',e=>{
+    if(overlay.hidden) return;
+    if(e.key==='Escape'){ closeModal(); return; }
+    if(e.key==='Tab'){
+      const f=overlay.querySelectorAll('a[href],button');
+      const first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
+</script>
+</body>
+</html>
