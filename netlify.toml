@@ -1,0 +1,19 @@
+# Redirect www -> non-www (canonical: https://myessentials.co.in)
+[[redirects]]
+  from = "https://www.myessentials.co.in/*"
+  to = "https://myessentials.co.in/:splat"
+  status = 301
+  force = true
+
+# Security + caching headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
