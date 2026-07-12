@@ -4,7 +4,7 @@
 
 This repository hosts the official website for Essentials — a single-page site where customers can explore our services and reach us instantly via WhatsApp or email.
 
-🔗 **Live site:** _(add your GitHub Pages link here once published)_
+🔗 **Live site:** _myessentials.co.in_
 
 ---
 
