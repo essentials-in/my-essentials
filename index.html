@@ -129,7 +129,8 @@
     border:1.5px solid var(--brand);
     display:grid;place-items:center;color:var(--brand);font-size:1.05rem;background:transparent
   }
-  .head-actions{display:flex;align-items:center;gap:12px}
+  .head-actions{display:flex;align-items:center;gap:12px;    margin-left:auto;
+}
   /* ===== THEME PILL TOGGLE ===== */
   .theme-toggle{
     position:relative;
@@ -356,7 +357,6 @@
 
 <header>
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Essentials home"><span class="dot">≈</span></a>
     <div class="head-actions">
       <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="Toggle dark mode" title="Toggle light / dark mode">
         <span class="tt-icon tt-sun" aria-hidden="true">☀</span>
