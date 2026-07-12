@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 640 250" width="640" height="250" role="img" aria-label="Essentials — Water · Parking · Solutions">
+  <defs>
+    <style>
+      .wordmark { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
+      .tagline  { font-family: "Inter", system-ui, sans-serif; font-weight: 600; }
+    </style>
+  </defs>
+
+  <line x1="220" y1="118" x2="420" y2="118" stroke="#c9a877" stroke-width="1.2" opacity="0.9"/>
+  <circle cx="320" cy="118" r="3.4" fill="#c9a877"/>
+
+  <text class="wordmark" x="320" y="205" text-anchor="middle" font-size="98" fill="#f3eee5" letter-spacing="1">Essentials</text>
+
+  <text class="tagline" x="320" y="252" text-anchor="middle" font-size="17" fill="#8bc0ba" letter-spacing="7">WATER · PARKING · SOLUTIONS</text>
+
+  <line x1="248" y1="280" x2="392" y2="280" stroke="#c9a877" stroke-width="1.2" opacity="0.9"/>
+  <circle cx="320" cy="280" r="3.4" fill="#c9a877"/>
+</svg>
