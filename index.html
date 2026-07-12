@@ -129,13 +129,41 @@
     border:1.5px solid var(--brand);
     display:grid;place-items:center;color:var(--brand);font-size:1.05rem;background:transparent
   }
-  .head-actions{display:flex;align-items:center;gap:10px}
-  .theme-btn{
-    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
-    background:var(--card);color:var(--ink);cursor:pointer;font-size:1rem;
-    display:grid;place-items:center;transition:.2s
+  .head-actions{display:flex;align-items:center;gap:12px}
+  /* ===== THEME PILL TOGGLE ===== */
+  .theme-toggle{
+    position:relative;
+    width:62px;height:32px;flex:0 0 auto;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--card);
+    cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:background .25s, border-color .25s;
   }
-  .theme-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .theme-toggle:hover{border-color:var(--brand)}
+  .theme-toggle:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  .theme-toggle .tt-icon{
+    width:26px;font-size:.82rem;line-height:1;text-align:center;
+    z-index:2;pointer-events:none;transition:opacity .25s;
+  }
+  .theme-toggle .tt-sun{color:var(--gold)}
+  .theme-toggle .tt-moon{color:var(--ink-soft)}
+  /* sliding knob sits over the active side */
+  .theme-toggle .tt-knob{
+    position:absolute;top:3px;left:3px;
+    width:26px;height:26px;border-radius:50%;
+    background:var(--brand);
+    box-shadow:0 2px 6px rgba(0,0,0,.2);
+    transition:transform .25s ease;
+    z-index:1;
+  }
+  /* dark mode: slide knob to the right (over the moon) */
+  [data-theme="dark"] .theme-toggle .tt-knob{transform:translateX(30px)}
+  [data-theme="dark"] .theme-toggle .tt-sun{opacity:.45}
+  [data-theme="light"] .theme-toggle .tt-moon{opacity:.55}
+  /* knob dims the icon it covers so the OTHER icon reads as "current option" */
+
   .nav-cta{
     background:var(--brand);color:#fff;border:none;
     padding:10px 22px;border-radius:2px;font-weight:500;font-size:.9rem;letter-spacing:.02em;
@@ -146,22 +174,35 @@
   .nav-cta:hover{background:var(--brand-deep);transform:translateY(-1px)}
   .nav-cta svg{width:17px;fill:#fff}
 
-  /* ===== LOGO BANNER ===== */
+  /* ===== LOGO BANNER (sticky, collapses on scroll) ===== */
   .logo-banner{
+    position:sticky; top:70px; z-index:30;
     width:100%;
-    background:linear-gradient(180deg, var(--paper) 0%, var(--stone) 100%);
+    background:var(--stone);
     border-bottom:1px solid var(--line);
-    padding:54px 20px;
+    padding:44px 20px;
     display:flex;justify-content:center;align-items:center;
+    transition:padding .28s ease, background .28s ease;
   }
-  .logo-banner img{height:120px;width:auto;max-width:100%}
-  .logo-banner .banner-logo--light{display:block}
-  .logo-banner .banner-logo--dark{display:none}
-  [data-theme="dark"] .logo-banner .banner-logo--light{display:none}
-  [data-theme="dark"] .logo-banner .banner-logo--dark{display:block}
+  /* full logo (expanded) vs wordmark-only (collapsed) */
+  .logo-banner .banner-full{height:112px;width:auto;max-width:100%;transition:height .28s ease, opacity .2s ease}
+  .logo-banner .banner-word{height:0;width:auto;max-width:100%;opacity:0;position:absolute;transition:height .28s ease, opacity .2s ease;pointer-events:none}
+
+  /* theme visibility for both logo types */
+  .banner-full.--dark,.banner-word.--dark{display:none}
+  [data-theme="dark"] .banner-full.--light,[data-theme="dark"] .banner-word.--light{display:none}
+  [data-theme="dark"] .banner-full.--dark,[data-theme="dark"] .banner-word.--dark{display:block}
+
+  /* COLLAPSED state (added via JS on scroll) */
+  .logo-banner.collapsed{padding:10px 20px; background:color-mix(in srgb, var(--stone) 94%, var(--ink) 6%);}
+  .logo-banner.collapsed .banner-full{height:0;opacity:0;pointer-events:none}
+  .logo-banner.collapsed .banner-word{height:34px;opacity:1;position:static;pointer-events:auto}
+
   @media (max-width:640px){
-    .logo-banner{padding:38px 16px}
-    .logo-banner img{height:84px}
+    .logo-banner{padding:30px 16px}
+    .logo-banner .banner-full{height:78px}
+    .logo-banner.collapsed{padding:8px 16px}
+    .logo-banner.collapsed .banner-word{height:26px}
   }
 
   .hero{padding:88px 0 56px;text-align:center}
@@ -193,20 +234,23 @@
   .track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 24px;scrollbar-width:none}
   .track::-webkit-scrollbar{display:none}
   .card{
-    scroll-snap-align:center;flex:0 0 88%;max-width:350px;
+    scroll-snap-align:start;flex:0 0 88%;
     background:var(--card);border:1px solid var(--line);border-radius:4px;
     box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s
   }
-  @media(min-width:720px){.card{flex:0 0 350px}}
+  /* Desktop: two cards visible at once (each ~half the row minus the gap) */
+  @media(min-width:720px){.card{flex:0 0 calc(50% - 12px)}}
   .card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(44,51,57,.10)}
   .card-top{height:160px;display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line)}
   .card-top.water{background:linear-gradient(160deg,#f0f5f4,#e0ecea)}
   .card-top.parking{background:linear-gradient(160deg,#f6f2ea,#efe7d6)}
   .card-top.more{background:linear-gradient(160deg,#f2f3f4,#e7e9ea)}
+  .card-top.it{background:linear-gradient(160deg,#eef2f6,#dde8f0)}
   .card-top svg{width:52px;height:52px}
   .card-top.water svg{color:var(--brand)}
   .card-top.parking svg{color:var(--gold)}
   .card-top.more svg{color:var(--ink-soft)}
+  .card-top.it svg{color:#3f6f9e}
   .card-body{padding:24px}
   .card-body h3{font-size:1.6rem;margin-bottom:6px;color:var(--ink)}
   .card-body p{color:var(--ink-soft);font-size:.95rem;margin-bottom:16px}
@@ -224,6 +268,7 @@
   .badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--line)}
   .badge.water svg{color:var(--brand)}
   .badge.parking svg{color:var(--gold)}
+  .badge.it svg{color:#3f6f9e}
   .detail-body{padding:0 26px 26px 84px}
   .detail-body p{color:var(--ink-soft);margin-bottom:18px}
   .detail-body h4{margin:16px 0 10px;font-family:"Inter",sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--brand);font-weight:600}
@@ -257,10 +302,34 @@
   .modal{background:var(--card);border-radius:10px;max-width:420px;width:100%;padding:26px 24px;box-shadow:0 24px 70px rgba(0,0,0,.28);animation:pop .3s ease;max-height:88vh;overflow-y:auto}
   @keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
   .modal h3{font-size:1.6rem;margin-bottom:4px;color:var(--ink)}
-  .modal .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:8px}
+  .modal .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:14px}
+  .q-select-label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .q-select{
+    width:100%;padding:11px 13px;margin-bottom:16px;
+    border:1px solid var(--line);border-radius:8px;
+    background:var(--card);color:var(--ink);
+    font-family:"Inter",sans-serif;font-size:.95rem;cursor:pointer;
+    appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;
+    transition:border-color .2s;
+  }
+  .q-select:hover,.q-select:focus{border-color:var(--brand);outline:none}
   .qref{background:var(--stone);border-radius:6px;padding:9px 13px;font-size:.82rem;color:var(--ink-soft);margin-bottom:16px;border:1px solid var(--line)}
   .qref b{color:var(--ink);font-family:ui-monospace,monospace}
   .opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:13px;margin-bottom:10px;cursor:pointer;transition:.2s;text-decoration:none;color:var(--ink)}
+  /* Side-by-side WhatsApp / Gmail buttons */
+  .opt-row{display:flex;gap:12px;margin-bottom:6px}
+  .opt2{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;
+    border:1px solid var(--line);background:var(--card);border-radius:10px;
+    padding:16px 10px;cursor:pointer;transition:.2s;text-decoration:none;color:var(--ink);
+    font-family:"Inter",sans-serif;
+  }
+  .opt2:hover{border-color:var(--brand);background:var(--stone);transform:translateY(-2px)}
+  .opt2 .ico2{width:30px;height:30px;display:grid;place-items:center}
+  .opt2 .ico2 svg{width:26px;height:26px}
+  .opt2-txt{font-size:.95rem;font-weight:600}
   .opt:hover{border-color:var(--brand);background:var(--stone)}
   .opt .ico{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none}
   .opt .ico.wa{background:#25d366}
@@ -287,18 +356,24 @@
 
 <header>
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Essentials home"><span class="dot">≈</span> Essentials</a>
+    <a class="brand" href="/" aria-label="Essentials home"><span class="dot">≈</span></a>
     <div class="head-actions">
-      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Switch to dark theme" aria-pressed="false" title="Switch theme"><span aria-hidden="true">🌙</span></button>
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="Toggle dark mode" title="Toggle light / dark mode">
+        <span class="tt-icon tt-sun" aria-hidden="true">☀</span>
+        <span class="tt-icon tt-moon" aria-hidden="true">☾</span>
+        <span class="tt-knob" aria-hidden="true"></span>
+      </button>
       <button class="nav-cta" onclick="openModal()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6-.2 1.4-.9 2.6-1.4 3.4-.2.3.1.7.5.6 2-.5 3.6-1.3 4.7-2 1 .3 1.9.4 2.8.4 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg>Raise a Query</button>
     </div>
   </div>
 </header>
 
 <main>
-<section class="logo-banner" aria-label="Essentials">
-  <img class="banner-logo banner-logo--light" src="/assets/logo-head-light.svg" alt="Essentials — Water · Parking · Solutions" />
-  <img class="banner-logo banner-logo--dark" src="/assets/logo-head-dark.svg" alt="Essentials — Water · Parking · Solutions" />
+<section class="logo-banner" id="logoBanner" aria-label="Essentials">
+  <img class="banner-full --light" src="/assets/logo-head-light.svg" alt="Essentials — Water · Parking · Solutions" />
+  <img class="banner-full --dark" src="/assets/logo-head-dark.svg" alt="Essentials — Water · Parking · Solutions" />
+  <img class="banner-word --light" src="/assets/wordmark-light.svg" alt="Essentials" />
+  <img class="banner-word --dark" src="/assets/wordmark-dark.svg" alt="Essentials" />
 </section>
 <section class="hero">
   <div class="wrap">
@@ -327,6 +402,10 @@
         <article class="card" role="button" tabindex="0" onclick="openDetail('d-parking')" onkeydown="cardKey(event,'d-parking')" aria-label="Parking Services — learn more">
           <div class="card-top parking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Parking"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></div>
           <div class="card-body"><h3>Parking Services</h3><p>Organised, hassle-free parking for societies, offices, and commercial spaces.</p><span class="card-link">Learn more →</span></div>
+        </article>
+        <article class="card" role="button" tabindex="0" onclick="openDetail('d-it')" onkeydown="cardKey(event,'d-it')" aria-label="IT & Web Services — learn more">
+          <div class="card-top it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website"><rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M2.5 8h19"/><path d="M6 6.2h.01M8.4 6.2h.01"/><path d="M9.5 21h5M12 18v3"/></svg></div>
+          <div class="card-body"><h3>IT &amp; Web Services</h3><p>We build clean, modern websites for businesses like yours — just like this one. Get online with a site that looks premium.</p><span class="card-link">Learn more →</span></div>
         </article>
         <article class="card" role="button" tabindex="0" onclick="openModal()" onkeydown="cardKey(event,null,true)" aria-label="Need something else — ask us">
           <div class="card-top more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" role="img" aria-label="More services"><path d="M12 5v14M5 12h14"/></svg></div>
@@ -370,6 +449,20 @@
       <button class="btn-primary" onclick="openModal('Parking Services')">Enquire about parking services</button>
     </div>
   </details>
+  <details class="detail" id="d-it">
+    <summary><span class="badge it"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M2.5 8h19"/><path d="M9.5 21h5M12 18v3"/></svg></span>IT &amp; Web Services<span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="detail-body">
+      <p>Beyond facility management, we build websites for businesses like yours — clean, fast, mobile-friendly, and built to look premium. This very site is an example of our work.</p>
+      <h4>What's included</h4>
+      <ul class="feature-list">
+        <li>Custom business websites, designed and built end to end</li>
+        <li>Mobile-responsive, fast-loading, and SEO-ready</li>
+        <li>Domain setup, hosting, and going live — handled for you</li>
+        <li>Ongoing support and updates as your business grows</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('IT & Web Services')">Enquire about IT services</button>
+    </div>
+  </details>
 </section>
 
 <section class="trust" aria-label="Why choose us">
@@ -379,7 +472,7 @@
       <p>We're a new business — which means every client gets our full attention.</p>
     </div>
     <div class="trust-grid">
-      <div class="trust-item"><h3>2</h3><p>Core services, done well</p></div>
+      <div class="trust-item"><h3 id="svcCount">3</h3><p>Services, done well</p></div>
       <div class="trust-item"><h3>1:1</h3><p>Personal attention on every project</p></div>
       <div class="trust-item"><h3>&lt;24h</h3><p>Typical response to queries</p></div>
     </div>
@@ -404,10 +497,24 @@
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
     <h3 id="modalTitle">How can we help?</h3>
-    <p class="sub" id="modalDesc">Choose how you'd like to reach us.</p>
+    <p class="sub" id="modalDesc">Pick a service, then choose how you'd like to reach us.</p>
+    <label class="q-select-label" for="qService">Service</label>
+    <select id="qService" class="q-select" aria-label="Select a service" onchange="onServiceChange()"></select>
     <div class="qref">Your reference number: <b id="qref">—</b></div>
-    <a class="opt" id="waOpt" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp"><span class="ico wa" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6-.2 1.4-.9 2.6-1.4 3.4-.2.3.1.7.5.6 2-.5 3.6-1.3 4.7-2 1 .3 1.9.4 2.8.4 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg></span><span class="opt-txt"><strong>WhatsApp us</strong><span>Chat instantly</span></span></a>
-    <button class="opt" id="emOpt" type="button" onclick="handleEmail()" aria-label="Contact us by email"><span class="ico em" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 3.4V18h16V7.4l-8 5-8-5z"/></svg></span><span class="opt-txt"><strong>Email us</strong><span>Opens your mail app, pre-filled</span></span></button>
+    <div class="opt-row">
+      <a class="opt2" id="waOpt" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+        <span class="ico2" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </span>
+        <span class="opt2-txt">WhatsApp</span>
+      </a>
+      <button class="opt2" id="emOpt" type="button" onclick="handleEmail()" aria-label="Contact us by email via Gmail">
+        <span class="ico2" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26"><path fill="#4285F4" d="M6 12v24a2 2 0 0 0 2 2h4V16.5L24 25l12-8.5V38h4a2 2 0 0 0 2-2V12l-4-2.8V32h-.5L24 21 8.5 32H8V9.2z"/><path fill="#34A853" d="M8 38h4V16.5L8 13.7z"/><path fill="#FBBC04" d="M36 38h4V12l-4 2.8z"/><path fill="#EA4335" d="M8 12l16 11 16-11-2.2-1.6a3 3 0 0 0-3.5.1L24 17 13.7 10.6a3 3 0 0 0-3.5-.1z"/><path fill="#C5221F" d="M8 12v1.7l4 2.8V16z"/></svg>
+        </span>
+        <span class="opt2-txt">Gmail</span>
+      </button>
+    </div>
     <div class="email-fallback" id="emailFallback" hidden>
       <p class="ef-note">If your mail app didn't open, email us directly:</p>
       <p class="ef-addr" id="efAddr">Myessentials.global@gmail.com</p>
@@ -419,16 +526,29 @@
 </div>
 
 <script>
-  const CONFIG = { whatsapp:"918950998004", email:"Myessentials.global@gmail.com", business:"Essentials" };
+  const CONFIG = {
+    whatsappDefault:"918950998004",   // Water, Parking, Other
+    whatsappIT:"918950438004",        // IT & Web Services
+    email:"Myessentials.global@gmail.com",
+    business:"Essentials"
+  };
+  // Services shown in the query dropdown. Each maps to the WhatsApp number to use.
+  // To add a new service later: add one line here. The count stat and dropdown update automatically.
+  // Set isService:false for non-service options (like the catch-all) so they don't inflate the count.
+  const SERVICES = [
+    { label:"Water Management",   number: CONFIG.whatsappDefault, isService:true },
+    { label:"Parking Services",   number: CONFIG.whatsappDefault, isService:true },
+    { label:"IT & Web Services",  number: CONFIG.whatsappIT,      isService:true },
+    { label:"Have something else for us", number: CONFIG.whatsappDefault, isService:false }
+  ];
   const EMAIL = { gmailWeb:'', mailto:'', ref:'' };
 
   const themeBtn = document.getElementById('themeBtn');
   function setTheme(t){
     document.documentElement.setAttribute('data-theme', t);
     const dark = t==='dark';
-    themeBtn.innerHTML = '<span aria-hidden="true">'+(dark?'☀️':'🌙')+'</span>';
-    themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.setAttribute('aria-checked', dark ? 'true' : 'false');
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
     document.querySelector('meta[name=theme-color]').setAttribute('content', dark ? '#171b20' : '#faf6ef');
     document.cookie = "theme="+t+";path=/;max-age=31536000;SameSite=Lax";
   }
@@ -445,6 +565,22 @@
   const track = document.getElementById('track');
   function slide(dir){ const c=track.querySelector('.card'); track.scrollBy({left:dir*(c.offsetWidth+24),behavior:'smooth'}); }
   function scrollToServices(){ document.getElementById('services').scrollIntoView({behavior:'smooth'}); }
+
+  // Collapse the logo banner to wordmark-only when the user scrolls down
+  (function bannerCollapse(){
+    const banner = document.getElementById('logoBanner');
+    if(!banner) return;
+    let ticking = false;
+    function update(){
+      if(window.scrollY > 40){ banner.classList.add('collapsed'); }
+      else { banner.classList.remove('collapsed'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', ()=>{
+      if(!ticking){ window.requestAnimationFrame(update); ticking = true; }
+    }, {passive:true});
+    update();
+  })();
   function openDetail(id){ const el=document.getElementById(id); el.open=true; el.scrollIntoView({behavior:'smooth',block:'center'}); }
   function cardKey(e, id, isModal){
     if(e.key==='Enter' || e.key===' '){
@@ -460,12 +596,32 @@
   }
 
   const overlay=document.getElementById('overlay');
+  const qServiceEl=document.getElementById('qService');
   let lastFocused=null;
-  function openModal(service){
-    const ref=makeRef();
-    document.getElementById('qref').textContent=ref;
-    const svc = service ? ` regarding ${service}` : '';
-    const subject = `New Query [${ref}]${service ? ' - ' + service : ''}`;
+  let currentRef='';
+
+  // Populate the service dropdown once
+  (function buildServiceOptions(){
+    SERVICES.forEach((s,i)=>{
+      const o=document.createElement('option');
+      o.value=String(i); o.textContent=s.label;
+      qServiceEl.appendChild(o);
+    });
+    // Dynamic service count for the trust stat (counts only real services)
+    const count = SERVICES.filter(s=>s.isService).length;
+    const el = document.getElementById('svcCount');
+    if(el) el.textContent = String(count);
+  })();
+
+  // Rebuild WhatsApp + email links based on the currently selected service
+  function refreshQueryLinks(){
+    const idx = parseInt(qServiceEl.value,10) || 0;
+    const svcObj = SERVICES[idx] || SERVICES[0];
+    const service = svcObj.label;
+    const number = svcObj.number;           // <-- routes IT to the other number
+    const ref = currentRef;
+    const svc = ` regarding ${service}`;
+    const subject = `New Query [${ref}] - ${service}`;
     const bodyText =
       `Hello ${CONFIG.business},\n\n` +
       `I'd like to raise a query${svc}.\n\n` +
@@ -473,28 +629,44 @@
       `My message:\n\n\n` +
       `---\nName:\nPhone:\n`;
 
-    // WhatsApp
+    // WhatsApp — number depends on the selected service
     const waMsg = `Hi ${CONFIG.business}, I'd like to raise a query${svc}. My reference number is ${ref}.`;
     document.getElementById('waOpt').href =
-      `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(waMsg)}`;
+      `https://wa.me/${number}?text=${encodeURIComponent(waMsg)}`;
 
-    // Email — store both URLs; handleEmail() picks the method and shows a copy fallback.
+    // Email
     const enc = { su: encodeURIComponent(subject), body: encodeURIComponent(bodyText) };
     EMAIL.gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONFIG.email)}&su=${enc.su}&body=${enc.body}`;
     EMAIL.mailto = `mailto:${CONFIG.email}?subject=${enc.su}&body=${enc.body}`;
     EMAIL.ref = ref;
+  }
+
+  function onServiceChange(){ refreshQueryLinks(); }
+
+  function openModal(service){
+    currentRef = makeRef();
+    document.getElementById('qref').textContent = currentRef;
+
+    // Preselect the service if one was passed (e.g. from a detail card's Enquire button)
+    let sel = 0;
+    if(service){
+      const found = SERVICES.findIndex(s => s.label.toLowerCase() === service.toLowerCase());
+      if(found >= 0) sel = found;
+    }
+    qServiceEl.value = String(sel);
+
+    refreshQueryLinks();
 
     // Reset the fallback panel each time the modal opens
     const fb = document.getElementById('emailFallback');
     fb.hidden = true;
-    document.getElementById('efRef').textContent = ref;
+    document.getElementById('efRef').textContent = currentRef;
     document.getElementById('efCopyBtn').textContent = 'Copy email address';
 
     lastFocused=document.activeElement;
     overlay.hidden=false;
     overlay.classList.add('show');
-    // move focus into the dialog
-    overlay.querySelector('.opt').focus();
+    qServiceEl.focus();
   }
 
   // Try to open the user's mail app; reveal the copy fallback so they're never stuck.
