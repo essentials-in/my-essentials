@@ -154,10 +154,11 @@
     padding:54px 20px;
     display:flex;justify-content:center;align-items:center;
   }
-  .logo-banner img{height:120px;width:auto;display:block;max-width:100%}
-  .banner-logo--dark{display:none}
-  [data-theme="dark"] .banner-logo--light{display:none}
-  [data-theme="dark"] .banner-logo--dark{display:block}
+  .logo-banner img{height:120px;width:auto;max-width:100%}
+  .logo-banner .banner-logo--light{display:block}
+  .logo-banner .banner-logo--dark{display:none}
+  [data-theme="dark"] .logo-banner .banner-logo--light{display:none}
+  [data-theme="dark"] .logo-banner .banner-logo--dark{display:block}
   @media (max-width:640px){
     .logo-banner{padding:38px 16px}
     .logo-banner img{height:84px}
