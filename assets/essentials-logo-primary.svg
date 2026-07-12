@@ -2,7 +2,7 @@
   <defs>
     <style>
       .wordmark { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
-      .tagline  { font-family: "Inter", system-ui, sans-serif; font-weight: 500; }
+      .tagline  { font-family: "Inter", system-ui, sans-serif; font-weight: 600; }
     </style>
   </defs>
 

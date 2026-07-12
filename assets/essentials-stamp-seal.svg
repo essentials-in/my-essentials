@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Essentials official stamp">
+  <defs>
+    <style>
+      .wordmark { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
+      .ring     { font-family: "Inter", system-ui, sans-serif; font-weight: 600; }
+    </style>
+    <!-- top arc (text reads left-to-right along the top) -->
+    <path id="arcTop" d="M 60 200 A 140 140 0 0 1 340 200" fill="none"/>
+    <!-- bottom arc (text reads left-to-right along the bottom) -->
+    <path id="arcBottom" d="M 68 200 A 132 132 0 0 0 332 200" fill="none"/>
+  </defs>
+
+  <!-- outer + inner rings -->
+  <circle cx="200" cy="200" r="185" fill="none" stroke="#000000" stroke-width="3"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="#000000" stroke-width="1.4"/>
+
+  <!-- curved ring text -->
+  <text class="ring" font-size="21" fill="#000000" letter-spacing="3">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">M/s. ESSENTIALS</textPath>
+  </text>
+  <text class="ring" font-size="15" fill="#000000" letter-spacing="4">
+    <textPath href="#arcBottom" startOffset="50%" text-anchor="middle">GURGAON · NCR</textPath>
+  </text>
+
+  <!-- side dividers -->
+  <circle cx="52" cy="200" r="3" fill="#000000"/>
+  <circle cx="348" cy="200" r="3" fill="#000000"/>
+
+  <!-- center wordmark -->
+  <text class="wordmark" x="200" y="192" text-anchor="middle" font-size="58" fill="#000000">Essentials</text>
+  <line x1="140" y1="214" x2="260" y2="214" stroke="#000000" stroke-width="1.2"/>
+  <text class="ring" x="200" y="238" text-anchor="middle" font-size="12" fill="#000000" letter-spacing="3">WATER · PARKING</text>
+</svg>
