@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" width="720" height="200" role="img" aria-label="Essentials — Water and Parking Solutions">
+  <defs>
+    <style>
+      .wordmark { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
+      .tagline  { font-family: "Inter", system-ui, sans-serif; font-weight: 500; }
+      .mono     { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
+    </style>
+  </defs>
+
+  <rect width="720" height="200" fill="#faf6ef"/>
+
+  <!-- monogram tile -->
+  <rect x="40" y="50" width="100" height="100" rx="20" fill="#3a7772"/>
+  <rect x="48" y="58" width="84" height="84" rx="14" fill="none" stroke="#c9a877" stroke-width="1.6" opacity="0.9"/>
+  <text class="mono" x="90" y="128" text-anchor="middle" font-size="76" fill="#faf6ef">E</text>
+
+  <!-- divider -->
+  <line x1="172" y1="60" x2="172" y2="140" stroke="#e6ded1" stroke-width="1.4"/>
+
+  <!-- wordmark + tagline -->
+  <text class="wordmark" x="200" y="108" font-size="70" fill="#2a2b28" letter-spacing="0.5">Essentials</text>
+  <text class="tagline" x="203" y="140" font-size="14" fill="#3a7772" letter-spacing="5.5">WATER · PARKING · SOLUTIONS</text>
+</svg>

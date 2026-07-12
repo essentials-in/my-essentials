@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Essentials monogram">
+  <defs>
+    <style>.mono { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }</style>
+  </defs>
+
+  <!-- rounded teal tile -->
+  <rect width="240" height="240" rx="44" fill="#3a7772"/>
+  <!-- thin gold inner frame -->
+  <rect x="16" y="16" width="208" height="208" rx="30" fill="none" stroke="#c9a877" stroke-width="2" opacity="0.9"/>
+
+  <!-- serif E -->
+  <text class="mono" x="120" y="170" text-anchor="middle" font-size="170" fill="#faf6ef">E</text>
+</svg>
