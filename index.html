@@ -277,6 +277,7 @@
   .modal{background:var(--card);border-radius:10px;max-width:420px;width:100%;padding:26px 24px;box-shadow:0 24px 70px rgba(0,0,0,.28);animation:pop .3s ease;max-height:88vh;overflow-y:auto}
   @keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
   .modal h3{font-size:1.6rem;margin-bottom:4px;color:var(--ink)}
+  .modal h3:focus{outline:none}
   .modal .sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:14px}
   .q-select-label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
   .q-select{
@@ -290,6 +291,11 @@
     transition:border-color .2s;
   }
   .q-select:hover,.q-select:focus{border-color:var(--brand);outline:none}
+  .q-select.needs-pick{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.15);animation:nudge .4s ease}
+  @keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  .svc-hint{color:#c0392b;font-size:.82rem;margin:-8px 0 12px}
+  /* Disabled contact buttons until a service is chosen */
+  .opt-row.is-disabled .opt2{opacity:.45;pointer-events:none;filter:grayscale(.5)}
   .qref{background:var(--stone);border-radius:6px;padding:9px 13px;font-size:.82rem;color:var(--ink-soft);margin-bottom:16px;border:1px solid var(--line)}
   .qref b{color:var(--ink);font-family:ui-monospace,monospace}
   .opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:13px;margin-bottom:10px;cursor:pointer;transition:.2s;text-decoration:none;color:var(--ink)}
@@ -465,13 +471,14 @@
 
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-    <h3 id="modalTitle">How can we help?</h3>
+    <h3 id="modalTitle" tabindex="-1">How can we help?</h3>
     <p class="sub" id="modalDesc">Pick a service, then choose how you'd like to reach us.</p>
     <label class="q-select-label" for="qService">Service</label>
     <select id="qService" class="q-select" aria-label="Select a service" onchange="onServiceChange()"></select>
+    <p class="svc-hint" id="svcHint" hidden>Please select a service to continue.</p>
     <div class="qref">Your reference number: <b id="qref">—</b></div>
     <div class="opt-row">
-      <a class="opt2" id="waOpt" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+      <a class="opt2" id="waOpt" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp" onclick="return guardService(event)">
         <span class="ico2" aria-hidden="true">
           <img src="/assets/icon-whatsapp.svg" alt="" width="28" height="28" />
         </span>
@@ -556,6 +563,10 @@
 
   // Populate the service dropdown once
   (function buildServiceOptions(){
+    // Placeholder first — no service selected by default
+    const ph=document.createElement('option');
+    ph.value=""; ph.textContent="Select your service…"; ph.disabled=false; ph.selected=true;
+    qServiceEl.appendChild(ph);
     SERVICES.forEach((s,i)=>{
       const o=document.createElement('option');
       o.value=String(i); o.textContent=s.label;
@@ -567,9 +578,31 @@
     if(el) el.textContent = String(count);
   })();
 
-  // Rebuild WhatsApp + email links based on the currently selected service
+  // Rebuild WhatsApp + email links based on the currently selected service.
+  // If no service is selected, disable the contact buttons and show a prompt.
   function refreshQueryLinks(){
-    const idx = parseInt(qServiceEl.value,10) || 0;
+    const raw = qServiceEl.value;
+    const waBtn = document.getElementById('waOpt');
+    const emBtn = document.getElementById('emOpt');
+    const hint  = document.getElementById('svcHint');
+
+    // No service chosen yet -> validation state
+    if(raw === "" || raw == null){
+      document.querySelector('.opt-row').classList.add('is-disabled');
+      waBtn.removeAttribute('href');
+      waBtn.setAttribute('aria-disabled','true');
+      emBtn.disabled = true;
+      if(hint) hint.hidden = false;
+      return;
+    }
+
+    // A service is selected -> enable and build links
+    document.querySelector('.opt-row').classList.remove('is-disabled');
+    waBtn.setAttribute('aria-disabled','false');
+    emBtn.disabled = false;
+    if(hint) hint.hidden = true;
+
+    const idx = parseInt(raw,10) || 0;
     const svcObj = SERVICES[idx] || SERVICES[0];
     const service = svcObj.label;
     const number = svcObj.number;           // <-- routes IT to the other number
@@ -585,8 +618,7 @@
 
     // WhatsApp — number depends on the selected service
     const waMsg = `Hi ${CONFIG.business}, I'd like to raise a query${svc}. My reference number is ${ref}.`;
-    document.getElementById('waOpt').href =
-      `https://wa.me/${number}?text=${encodeURIComponent(waMsg)}`;
+    waBtn.href = `https://wa.me/${number}?text=${encodeURIComponent(waMsg)}`;
 
     // Email
     const enc = { su: encodeURIComponent(subject), body: encodeURIComponent(bodyText) };
@@ -597,17 +629,32 @@
 
   function onServiceChange(){ refreshQueryLinks(); }
 
+  // Block WhatsApp/Gmail until a service is chosen; nudge the dropdown instead.
+  function guardService(e){
+    if(qServiceEl.value === "" || qServiceEl.value == null){
+      if(e) e.preventDefault();
+      const hint = document.getElementById('svcHint');
+      if(hint) hint.hidden = false;
+      qServiceEl.classList.add('needs-pick');
+      qServiceEl.focus();
+      setTimeout(()=>qServiceEl.classList.remove('needs-pick'), 1200);
+      return false;
+    }
+    return true;
+  }
+
   function openModal(service){
     currentRef = makeRef();
     document.getElementById('qref').textContent = currentRef;
 
-    // Preselect the service if one was passed (e.g. from a detail card's Enquire button)
-    let sel = 0;
+    // Preselect the service if one was passed (from a detail card's Enquire button).
+    // Otherwise leave the "Select your service…" placeholder (no selection).
     if(service){
       const found = SERVICES.findIndex(s => s.label.toLowerCase() === service.toLowerCase());
-      if(found >= 0) sel = found;
+      qServiceEl.value = found >= 0 ? String(found) : "";
+    } else {
+      qServiceEl.value = "";
     }
-    qServiceEl.value = String(sel);
 
     refreshQueryLinks();
 
@@ -620,11 +667,13 @@
     lastFocused=document.activeElement;
     overlay.hidden=false;
     overlay.classList.add('show');
-    qServiceEl.focus();
+    // Focus the heading (not the select) so mobile doesn't auto-open the dropdown picker
+    document.getElementById('modalTitle').focus();
   }
 
   // Try to open the user's mail app; reveal the copy fallback so they're never stuck.
   function handleEmail(){
+    if(!guardService()) return;   // require a service first
     const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
     try {
       if (isMobile) {
