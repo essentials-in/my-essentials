@@ -93,6 +93,52 @@
   }
   .skip:focus{left:0}
 
+  /* ===== WELCOME GUARD SPLASH ===== */
+  .splash{
+    position:fixed;inset:0;z-index:9999;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,var(--paper),var(--stone));
+    animation:splashOut .6s ease 1.7s forwards;
+    cursor:pointer;
+  }
+  .splash-inner{display:flex;flex-direction:column;align-items:center;gap:18px;
+    animation:splashPop .5s cubic-bezier(.18,.9,.32,1.4) both}
+  .guard{transform-origin:50% 100%;animation:guardBow 1.7s ease both}
+  .guard svg .g-body{fill:#3a7772}
+  .guard svg .g-tie{fill:#a8894f}
+  .guard svg .g-badge,.guard svg .g-cap-badge{fill:#f0d488;stroke:none}
+  .guard svg .g-arm{fill:none;stroke:#3a7772;stroke-width:6;stroke-linecap:round}
+  .guard svg .g-head{fill:#f2d5b8}
+  .guard svg .g-eye{fill:#243b3a}
+  .guard svg .g-smile{fill:none;stroke:#243b3a;stroke-width:2;stroke-linecap:round}
+  .guard svg .g-cap{fill:#2f5f5b}
+  .guard svg .g-cap-brim{fill:#243b3a}
+  .guard svg .g-shadow{fill:rgba(0,0,0,.10)}
+  .splash-word{text-align:center;line-height:1.2}
+  .splash-brand{display:block;font-family:"Cormorant Garamond",serif;font-weight:600;
+    font-size:2.4rem;color:var(--ink);letter-spacing:.01em}
+  .splash-line{display:block;font-family:"Inter",sans-serif;font-size:.95rem;
+    color:var(--brand);font-weight:600;letter-spacing:.04em;
+    opacity:0;animation:lineIn .4s ease .85s forwards}
+  .splash-dot{opacity:0;animation:dotIn .3s ease 1.15s forwards}
+  @keyframes guardBow{
+    0%{transform:translateY(20px) rotate(0);opacity:0}
+    22%{transform:translateY(0) rotate(0);opacity:1}
+    50%{transform:translateY(0) rotate(0)}
+    62%{transform:translateY(4px) rotate(14deg)}  /* the bow */
+    78%{transform:translateY(4px) rotate(14deg)}
+    100%{transform:translateY(0) rotate(0)}
+  }
+  @keyframes splashPop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+  @keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+  @keyframes lineIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes dotIn{to{opacity:1}}
+  .splash.hide{animation:none;opacity:0;visibility:hidden;pointer-events:none}
+  @media (prefers-reduced-motion:reduce){
+    .splash{animation:splashOut .3s ease .8s forwards}
+    .guard,.splash-inner,.splash-line,.splash-dot{animation:none;opacity:1}
+  }
+
   /* Accessibility: clear keyboard focus on every interactive element */
   a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
     outline:3px solid var(--brand);
@@ -222,7 +268,8 @@
   .card-top.parking{background:linear-gradient(160deg,#f6f2ea,#efe7d6)}
   .card-top.more{background:linear-gradient(160deg,#f2f3f4,#e7e9ea)}
   .card-top.it{background:linear-gradient(160deg,#eef2f6,#dde8f0)}
-  .card-top svg{width:52px;height:52px}
+  .card-top svg{width:52px;height:52px;transition:transform .3s cubic-bezier(.18,.9,.32,1.4)}
+  .card:hover .card-top svg{transform:translateY(-4px) rotate(-4deg) scale(1.08)}
   .card-top.water svg{color:var(--brand)}
   .card-top.parking svg{color:var(--gold)}
   .card-top.more svg{color:var(--ink-soft)}
@@ -353,6 +400,41 @@
 </head>
 <body>
 
+<!-- ===== WELCOME GUARD SPLASH ===== -->
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash-inner">
+    <div class="guard" id="guard">
+      <svg viewBox="0 0 120 150" width="150" height="188" role="img" aria-label="Security guard welcoming you">
+        <!-- shadow -->
+        <ellipse class="g-shadow" cx="60" cy="143" rx="30" ry="5"/>
+        <!-- body/uniform -->
+        <path class="g-body" d="M35 150c0-22 4-40 25-40s25 18 25 40z"/>
+        <!-- tie -->
+        <path class="g-tie" d="M60 110l-4 8 4 14 4-14z"/>
+        <!-- badge -->
+        <circle class="g-badge" cx="46" cy="128" r="3.4"/>
+        <!-- arms -->
+        <path class="g-arm" d="M37 116c-8 3-12 10-11 18"/>
+        <path class="g-arm" d="M83 116c8 3 12 10 11 18"/>
+        <!-- head -->
+        <circle class="g-head" cx="60" cy="92" r="18"/>
+        <!-- face -->
+        <circle cx="54" cy="92" r="2" class="g-eye"/>
+        <circle cx="66" cy="92" r="2" class="g-eye"/>
+        <path d="M54 99a8 8 0 0 0 12 0" class="g-smile"/>
+        <!-- cap -->
+        <path class="g-cap" d="M40 82a20 20 0 0 1 40 0z"/>
+        <rect class="g-cap-brim" x="38" y="80" width="44" height="5" rx="2.5"/>
+        <circle class="g-cap-badge" cx="60" cy="74" r="3"/>
+      </svg>
+    </div>
+    <div class="splash-word">
+      <span class="splash-brand">Essentials</span>
+      <span class="splash-line">At your service <span class="splash-dot">.</span></span>
+    </div>
+  </div>
+</div>
+
 <a class="skip" href="#services">Skip to services</a>
 
 <header>
@@ -391,19 +473,19 @@
     <div class="carousel">
       <div class="track" id="track">
         <article class="card" role="button" tabindex="0" onclick="openDetail('d-water')" onkeydown="cardKey(event,'d-water')" aria-label="Water Management — learn more">
-          <div class="card-top water"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Water droplet"><path d="M12 3c0 0 5.5 5.8 5.5 10.2a5.5 5.5 0 0 1-11 0C6.5 8.8 12 3 12 3z"/><path d="M9.5 13.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></div>
+          <div class="card-top water"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Water droplet character"><path d="M20 5s9 9.5 9 16.5a9 9 0 0 1-18 0C11 14.5 20 5 20 5z"/><circle cx="16.5" cy="22" r="1.3" fill="currentColor" stroke="none"/><circle cx="23.5" cy="22" r="1.3" fill="currentColor" stroke="none"/><path d="M16.5 26.5a4 4 0 0 0 7 0"/></svg></div>
           <div class="card-body"><h3>Water Management</h3><p>Smart supply, storage, and quality monitoring so clean water is always available.</p><span class="card-link">Learn more →</span></div>
         </article>
         <article class="card" role="button" tabindex="0" onclick="openDetail('d-parking')" onkeydown="cardKey(event,'d-parking')" aria-label="Parking Services — learn more">
-          <div class="card-top parking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Parking"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></div>
+          <div class="card-top parking"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Parking sign character"><rect x="8" y="5" width="24" height="24" rx="6"/><path d="M15 24V12h6a4 4 0 0 1 0 8h-6"/><circle cx="13" cy="34" r="2.4"/><circle cx="27" cy="34" r="2.4"/><path d="M13 34h14"/></svg></div>
           <div class="card-body"><h3>Parking Services</h3><p>Organised, hassle-free parking for societies, offices, and commercial spaces.</p><span class="card-link">Learn more →</span></div>
         </article>
         <article class="card" role="button" tabindex="0" onclick="openDetail('d-it')" onkeydown="cardKey(event,'d-it')" aria-label="IT & Web Services — learn more">
-          <div class="card-top it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website"><rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M2.5 8h19"/><path d="M6 6.2h.01M8.4 6.2h.01"/><path d="M9.5 21h5M12 18v3"/></svg></div>
+          <div class="card-top it"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website character"><rect x="5" y="7" width="30" height="21" rx="3"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="24" cy="16" r="1.3" fill="currentColor" stroke="none"/><path d="M16 21a5 5 0 0 0 8 0"/><path d="M15 33h10M20 28v5"/></svg></div>
           <div class="card-body"><h3>IT &amp; Web Services</h3><p>We build clean, modern websites for businesses like yours — just like this one. Get online with a site that looks premium.</p><span class="card-link">Learn more →</span></div>
         </article>
         <article class="card" role="button" tabindex="0" onclick="openModal()" onkeydown="cardKey(event,null,true)" aria-label="Need something else — ask us">
-          <div class="card-top more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" role="img" aria-label="More services"><path d="M12 5v14M5 12h14"/></svg></div>
+          <div class="card-top more"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="More services"><path d="M20 7c1 5.5 3.5 8 9 9-5.5 1-8 3.5-9 9-1-5.5-3.5-8-9-9 5.5-1 8-3.5 9-9z"/><circle cx="31" cy="10" r="1.6"/><circle cx="10" cy="30" r="1.6"/></svg></div>
           <div class="card-body"><h3>Need something else?</h3><p>Growing our offerings. Tell us what you need and we'll see how we can help.</p><span class="card-link">Ask us →</span></div>
         </article>
       </div>
@@ -509,7 +591,7 @@
           </g>
         </svg>
       </div>
-      <div class="oops-bubble">Please select a service <span class="oops-emoji">💧</span></div>
+      <div class="oops-bubble">Oops! Please select a service <span class="oops-emoji">💧</span></div>
     </div>
     <div class="qref">Your reference number: <b id="qref">—</b></div>
     <div class="opt-row">
@@ -537,6 +619,22 @@
 </div>
 
 <script>
+  // ===== Welcome guard splash: auto-dismiss + skippable =====
+  (function(){
+    const splash = document.getElementById('splash');
+    if(!splash) return;
+    let done = false;
+    function dismiss(){
+      if(done) return; done = true;
+      splash.classList.add('hide');
+      setTimeout(()=>splash.remove(), 400);   // remove from DOM so it never blocks clicks
+    }
+    // click/tap anywhere to skip
+    splash.addEventListener('click', dismiss);
+    // auto-remove after the animation finishes (~2.3s safety)
+    setTimeout(dismiss, 2400);
+  })();
+
   const CONFIG = {
     whatsappDefault:"918950998004",   // Water, Parking, Other
     whatsappIT:"918950438004",        // IT & Web Services
