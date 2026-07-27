@@ -98,12 +98,12 @@
     position:fixed;inset:0;z-index:9999;
     display:flex;align-items:center;justify-content:center;
     background:linear-gradient(160deg,var(--paper),var(--stone));
-    animation:splashOut .6s ease 1.7s forwards;
+    animation:splashOut .45s ease .95s forwards;
     cursor:pointer;
   }
   .splash-inner{display:flex;flex-direction:column;align-items:center;gap:18px;
     animation:splashPop .5s cubic-bezier(.18,.9,.32,1.4) both}
-  .guard{transform-origin:50% 100%;animation:guardBow 1.7s ease both}
+  .guard{transform-origin:50% 100%;animation:guardBow .95s ease both}
   .guard svg .g-body{fill:#3a7772}
   .guard svg .g-tie{fill:#a8894f}
   .guard svg .g-badge,.guard svg .g-cap-badge{fill:#f0d488;stroke:none}
@@ -119,8 +119,8 @@
     font-size:2.4rem;color:var(--ink);letter-spacing:.01em}
   .splash-line{display:block;font-family:"Inter",sans-serif;font-size:.95rem;
     color:var(--brand);font-weight:600;letter-spacing:.04em;
-    opacity:0;animation:lineIn .4s ease .85s forwards}
-  .splash-dot{opacity:0;animation:dotIn .3s ease 1.15s forwards}
+    opacity:0;animation:lineIn .3s ease .45s forwards}
+  .splash-dot{opacity:0;animation:dotIn .25s ease .62s forwards}
   @keyframes guardBow{
     0%{transform:translateY(20px) rotate(0);opacity:0}
     22%{transform:translateY(0) rotate(0);opacity:1}
@@ -134,8 +134,10 @@
   @keyframes lineIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
   @keyframes dotIn{to{opacity:1}}
   .splash.hide{animation:none;opacity:0;visibility:hidden;pointer-events:none}
+  /* Returning visitors never paint the splash — keeps LCP at hero paint. */
+  html.splash-seen .splash{display:none}
   @media (prefers-reduced-motion:reduce){
-    .splash{animation:splashOut .3s ease .8s forwards}
+    .splash{animation:splashOut .3s ease .4s forwards}
     .guard,.splash-inner,.splash-line,.splash-dot{animation:none;opacity:1}
   }
 
@@ -267,13 +269,11 @@
   .card-top.water{background:linear-gradient(160deg,#f0f5f4,#e0ecea)}
   .card-top.parking{background:linear-gradient(160deg,#f6f2ea,#efe7d6)}
   .card-top.more{background:linear-gradient(160deg,#f2f3f4,#e7e9ea)}
-  .card-top.it{background:linear-gradient(160deg,#eef2f6,#dde8f0)}
   .card-top svg{width:52px;height:52px;transition:transform .3s cubic-bezier(.18,.9,.32,1.4)}
   .card:hover .card-top svg{transform:translateY(-4px) rotate(-4deg) scale(1.08)}
   .card-top.water svg{color:var(--brand)}
   .card-top.parking svg{color:var(--gold)}
   .card-top.more svg{color:var(--ink-soft)}
-  .card-top.it svg{color:#3f6f9e}
   .card-body{padding:24px}
   .card-body h3{font-size:1.6rem;margin-bottom:6px;color:var(--ink)}
   .card-body p{color:var(--ink-soft);font-size:.95rem;margin-bottom:16px}
@@ -291,7 +291,6 @@
   .badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--line)}
   .badge.water svg{color:var(--brand)}
   .badge.parking svg{color:var(--gold)}
-  .badge.it svg{color:#3f6f9e}
   .detail-body{padding:0 26px 26px 84px}
   .detail-body p{color:var(--ink-soft);margin-bottom:18px}
   .detail-body h4{margin:16px 0 10px;font-family:"Inter",sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--brand);font-weight:600}
@@ -399,6 +398,15 @@
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
+
+<script>
+  /* Runs before body paint: returning visitors skip the splash entirely. */
+  (function(){
+    if(/(?:^|; )splashSeen=1/.test(document.cookie)){
+      document.documentElement.classList.add('splash-seen');
+    }
+  })();
+</script>
 </head>
 <body>
 
@@ -482,10 +490,6 @@
           <div class="card-top parking"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Parking sign character"><rect x="8" y="5" width="24" height="24" rx="6"/><path d="M15 24V12h6a4 4 0 0 1 0 8h-6"/><circle cx="13" cy="34" r="2.4"/><circle cx="27" cy="34" r="2.4"/><path d="M13 34h14"/></svg></div>
           <div class="card-body"><h3>Parking Services</h3><p>Organised, hassle-free parking for societies, offices, and commercial spaces.</p><span class="card-link">Learn more →</span></div>
         </article>
-        <article class="card" role="button" tabindex="0" onclick="openDetail('d-it')" onkeydown="cardKey(event,'d-it')" aria-label="IT & Web Services — learn more">
-          <div class="card-top it"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website character"><rect x="5" y="7" width="30" height="21" rx="3"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="24" cy="16" r="1.3" fill="currentColor" stroke="none"/><path d="M16 21a5 5 0 0 0 8 0"/><path d="M15 33h10M20 28v5"/></svg></div>
-          <div class="card-body"><h3>IT &amp; Web Services</h3><p>We build clean, modern websites for businesses like yours — just like this one. Get online with a site that looks premium.</p><span class="card-link">Learn more →</span></div>
-        </article>
         <article class="card" role="button" tabindex="0" onclick="openModal()" onkeydown="cardKey(event,null,true)" aria-label="Need something else — ask us">
           <div class="card-top more"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="More services"><path d="M20 7c1 5.5 3.5 8 9 9-5.5 1-8 3.5-9 9-1-5.5-3.5-8-9-9 5.5-1 8-3.5 9-9z"/><circle cx="31" cy="10" r="1.6"/><circle cx="10" cy="30" r="1.6"/></svg></div>
           <div class="card-body"><h3>Need something else?</h3><p>Growing our offerings. Tell us what you need and we'll see how we can help.</p><span class="card-link">Ask us →</span></div>
@@ -528,20 +532,6 @@
       <button class="btn-primary" onclick="openModal('Parking Services')">Enquire about parking services</button>
     </div>
   </details>
-  <details class="detail" id="d-it">
-    <summary><span class="badge it"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M2.5 8h19"/><path d="M9.5 21h5M12 18v3"/></svg></span>IT &amp; Web Services<span class="chev" aria-hidden="true">▾</span></summary>
-    <div class="detail-body">
-      <p>Beyond facility management, we build websites for businesses like yours — clean, fast, mobile-friendly, and built to look premium. This very site is an example of our work.</p>
-      <h4>What's included</h4>
-      <ul class="feature-list">
-        <li>Custom business websites, designed and built end to end</li>
-        <li>Mobile-responsive, fast-loading, and SEO-ready</li>
-        <li>Domain setup, hosting, and going live — handled for you</li>
-        <li>Ongoing support and updates as your business grows</li>
-      </ul>
-      <button class="btn-primary" onclick="openModal('IT & Web Services')">Enquire about IT services</button>
-    </div>
-  </details>
 </section>
 
 <section class="trust" aria-label="Why choose us">
@@ -551,7 +541,7 @@
       <p>We're a new business — which means every client gets our full attention.</p>
     </div>
     <div class="trust-grid">
-      <div class="trust-item"><h3 id="svcCount">3</h3><p>Services, done well</p></div>
+      <div class="trust-item"><h3 id="svcCount">2</h3><p>Services, done well</p></div>
       <div class="trust-item"><h3>1:1</h3><p>Personal attention on every project</p></div>
       <div class="trust-item"><h3>&lt;24h</h3><p>Typical response to queries</p></div>
     </div>
@@ -625,6 +615,7 @@
   (function(){
     const splash = document.getElementById('splash');
     if(!splash) return;
+    if(document.documentElement.classList.contains('splash-seen')){ splash.remove(); return; }
     let done = false;
     function dismiss(){
       if(done) return; done = true;
@@ -633,13 +624,14 @@
     }
     // click/tap anywhere to skip
     splash.addEventListener('click', dismiss);
-    // auto-remove after the animation finishes (~2.3s safety)
-    setTimeout(dismiss, 2400);
+    // auto-remove after the animation finishes (~1.4s safety)
+    setTimeout(dismiss, 1500);
+    // Remember for 7 days so repeat visitors get an instant page.
+    document.cookie = "splashSeen=1;path=/;max-age=604800;SameSite=Lax";
   })();
 
   const CONFIG = {
     whatsappDefault:"918950998004",   // Water, Parking, Other
-    whatsappIT:"918950438004",        // IT & Web Services
     email:"Myessentials.global@gmail.com",
     business:"Essentials"
   };
@@ -649,7 +641,6 @@
   const SERVICES = [
     { label:"Water Management",   number: CONFIG.whatsappDefault, isService:true },
     { label:"Parking Services",   number: CONFIG.whatsappDefault, isService:true },
-    { label:"IT & Web Services",  number: CONFIG.whatsappIT,      isService:true },
     { label:"Have something else for us", number: CONFIG.whatsappDefault, isService:false }
   ];
   const EMAIL = { gmailWeb:'', mailto:'', ref:'' };
@@ -740,7 +731,7 @@
     const idx = parseInt(raw,10) || 0;
     const svcObj = SERVICES[idx] || SERVICES[0];
     const service = svcObj.label;
-    const number = svcObj.number;           // <-- routes IT to the other number
+    const number = svcObj.number;
     const ref = currentRef;
     const svc = ` regarding ${service}`;
     const subject = `New Query [${ref}] - ${service}`;
