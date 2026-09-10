@@ -1,6 +1,6 @@
 # Essentials
 
-**Water management & parking solutions for societies, businesses, and communities in Gurgaon & NCR.**
+**Water management & IT services for societies, businesses, and communities in Gurgaon & NCR.**
 
 This repository hosts the official website for Essentials — a single-page site where customers can explore our services and reach us instantly via WhatsApp or email.
 
@@ -13,7 +13,7 @@ This repository hosts the official website for Essentials — a single-page site
 Essentials provides two core services, delivered with personal attention:
 
 - **Water Management** — supply scheduling, tank cleaning and maintenance, quality testing, and usage monitoring.
-- **Parking Services** — space planning, slot allocation, signage, and on-ground flow management.
+- **IT Services** — website design and build, domain and business email setup, Google Business Profile and listings, and ongoing maintenance to help businesses go digital.
 
 We serve Gurgaon & NCR, Monday–Saturday, 9am–7pm.
 
