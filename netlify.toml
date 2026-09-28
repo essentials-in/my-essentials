@@ -5,13 +5,19 @@
   status = 301
   force = true
 
-# Security + caching headers
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Shared CSS/JS: cache for a day, then revalidate (files are not fingerprinted)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
 
 [[headers]]
   for = "/favicon.ico"
