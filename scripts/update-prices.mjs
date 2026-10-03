@@ -81,7 +81,10 @@ async function backfill(store, days) {
     const chunkStart = new Date(chunkEnd); chunkStart.setUTCDate(chunkEnd.getUTCDate() - Math.min(29, days - offset - 1));
     const body = await api('/timeseries', { start_date: ymd(chunkStart), end_date: ymd(chunkEnd) });
     const rates = body.rates || body;
-    if (offset === 0) console.log(`timeseries sample: ${Object.keys(rates).length} dates, first = ${Object.keys(rates)[0]}`);
+    if (offset === 0) {
+      const first = Object.values(rates)[0];
+      console.log(`timeseries: status=${body.status} keys=${Object.keys(body).join(',')} dates=${Object.keys(rates).length} firstDay=${JSON.stringify(first).slice(0, 400)}`);
+    }
     for (const [date, day] of Object.entries(rates)) {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !day || !day.metals) continue;
       const fx = inrPerUsd(day.currencies);
