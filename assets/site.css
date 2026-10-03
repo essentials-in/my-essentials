@@ -91,6 +91,8 @@ html.splash-seen .splash{display:none}
   .crumb-short{display:inline}
   .nav-cta{padding:0 12px}
   .nav-cta .cta-label{display:none}
+  /* Metal pages: drop "/ Copper" or "/ Aluminium" so the theme switch never overlaps the brand */
+  body[data-space="copper"] .crumbs,body[data-space="aluminium"] .crumbs{display:none}
   .head-actions{gap:8px}
 }
 
@@ -301,6 +303,10 @@ footer address{font-style:normal}
 .pb-toggle{margin-left:auto;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;font:600 .82rem "Inter",sans-serif;cursor:pointer}
 .pb-toggle:hover{background:var(--pb-line)}
 .price-panel{padding:6px 0 28px}
+/* Loading state: the bar is shown at once (no layout jump) with a soft placeholder */
+.pb-skel{display:inline-block;width:96px;height:14px;border-radius:4px;background:var(--pb-line);vertical-align:middle;animation:pbPulse 1.2s ease-in-out infinite}
+@keyframes pbPulse{50%{opacity:.45}}
+.price-bar.is-loading .pb-change,.price-bar.is-loading .pb-toggle{visibility:hidden}
 .price-trend{--pt-line:#A8642B;--pt-up:#1A7F4B;--pt-down:#B42318;--pt-grid:#ebe4d8;--pt-tip:#2a2b28;--pt-tip-ink:#faf6ef;
   background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:16px}
 .price-trend[data-metal="aluminium"]{--pt-line:#5F6B77}

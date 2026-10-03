@@ -3,7 +3,8 @@
    .github/workflows/prices.yml), so price updates never redeploy the site.
    Markup: a slim <section class="price-bar" data-metal="copper" hidden> under the header shows today's
    price; its "View trend" button opens .price-panel holding <div class="price-trend" data-metal="copper">.
-   The graph is drawn on first open (it needs a visible width). If the data can't load, the bar stays hidden. */
+   The bar shows a loading placeholder at once, then the last cached price (returning visitors), then fresh data.
+   The graph is drawn on first open (it needs a visible width). If no data can load, the bar is hidden. */
 (function(){
   'use strict';
   // GitHub raw first: it refreshes within 5 minutes. jsDelivr can lag up to 12h, so it is only a backup.
@@ -20,7 +21,7 @@
 
   function getJSON(i){
     if (i >= SOURCES.length) return Promise.reject(new Error('no source'));
-    return fetch(SOURCES[i], { cache: 'no-cache' })
+    return fetch(SOURCES[i]) // matches the <link rel=preload> in the page head
       .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
       .catch(function(){ return getJSON(i + 1); });
   }
@@ -48,38 +49,65 @@
     };
   }
 
-  getJSON(0).then(function(data){
-    document.querySelectorAll('.price-bar[data-metal]').forEach(function(bar){
-      var series = data[bar.getAttribute('data-metal')];
-      if (!Array.isArray(series) || series.length < 2) return;
-      var last = series[series.length - 1], prev = series[series.length - 2];
+  var CACHE_KEY = 'essentials-prices';
+  function readCache(){ try { return JSON.parse(localStorage.getItem(CACHE_KEY)); } catch (e) { return null; } }
+  function writeCache(d){ try { localStorage.setItem(CACHE_KEY, JSON.stringify(d)); } catch (e) {} }
 
-      var price = bar.querySelector('[data-pb="price"]');
+  var bars = [];
+  document.querySelectorAll('.price-bar[data-metal]').forEach(function(bar){
+    var btn = bar.querySelector('.pb-toggle');
+    var panel = bar.querySelector('.price-panel');
+    var state = { bar: bar, series: null, updated: null, built: false };
+    var root = panel && panel.querySelector('.price-trend[data-metal]');
+    function setOpen(open){
+      if (!state.series) return;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.firstChild.nodeValue = open ? 'Hide trend ' : 'View trend ';
+      btn.lastChild.textContent = open ? '▴' : '▾';
+      if (open && !state.built && root) { state.built = true; build(root, state.series, state.updated); }
+    }
+    state.setOpen = setOpen;
+    if (btn && panel) btn.addEventListener('click', function(){ setOpen(panel.hidden); });
+    bars.push(state);
+  });
+
+  // Fill the bar with a dataset (cached or fresh). The graph is drawn on first open with the newest data.
+  function fill(data){
+    bars.forEach(function(st){
+      var series = data && data[st.bar.getAttribute('data-metal')];
+      if (!Array.isArray(series) || series.length < 2) return;
+      st.series = series; st.updated = data.updated;
+      var last = series[series.length - 1], prev = series[series.length - 2];
+      var price = st.bar.querySelector('[data-pb="price"]');
       price.textContent = money(last[1]);
       price.appendChild(el('span', 'pb-unit', ' /kg'));
       var diff = last[1] - prev[1], up = diff >= 0;
-      var ch = bar.querySelector('[data-pb="change"]');
+      var ch = st.bar.querySelector('[data-pb="change"]');
       ch.textContent = (up ? '▲ ' : '▼ ') + Math.abs(diff / prev[1] * 100).toFixed(1) + '% today';
+      ch.classList.remove('is-up', 'is-down');
       ch.classList.add(up ? 'is-up' : 'is-down');
-
-      var btn = bar.querySelector('.pb-toggle');
-      var panel = bar.querySelector('.price-panel');
-      var root = panel && panel.querySelector('.price-trend[data-metal]');
-      var built = false;
-      function setOpen(open){
-        panel.hidden = !open;
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        btn.firstChild.nodeValue = open ? 'Hide trend ' : 'View trend ';
-        btn.lastChild.textContent = open ? '▴' : '▾';
-        if (open && !built && root) { built = true; build(root, series, data.updated); }
-      }
-      if (btn && panel) {
-        btn.addEventListener('click', function(){ setOpen(panel.hidden); });
-        if (location.hash === '#' + panel.id) setOpen(true); // shared link straight to the trend
-      }
-      bar.hidden = false;
+      st.bar.classList.remove('is-loading');
+      st.bar.removeAttribute('aria-busy');
+      st.bar.hidden = false;
     });
-  }).catch(function(){ /* stay hidden */ });
+  }
+
+  var cached = readCache();
+  if (cached) fill(cached); // returning visitors see the last known price instantly
+
+  getJSON(0).then(function(data){
+    writeCache(data);
+    fill(data);
+  }).catch(function(){
+    // No fresh data: keep a cached price if we had one, otherwise hide the bar.
+    bars.forEach(function(st){ if (!st.series) st.bar.hidden = true; });
+  }).then(function(){
+    bars.forEach(function(st){
+      var panel = st.bar.querySelector('.price-panel');
+      if (panel && location.hash === '#' + panel.id) st.setOpen(true); // shared link straight to the trend
+    });
+  });
 
   function build(root, all, updated){
     var name = root.getAttribute('data-name') || 'Metal';

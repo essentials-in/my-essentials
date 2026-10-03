@@ -73,6 +73,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+<link rel="preload" href="https://raw.githubusercontent.com/essentials-in/my-essentials/prices/prices.json" as="fetch" crossorigin>
 </head>
 <body data-space="aluminium">
 
@@ -94,11 +96,11 @@
 </header>
 
 <main id="main">
-  <section class="price-bar" data-metal="aluminium" hidden aria-label="Aluminium price today">
+  <section class="price-bar is-loading" data-metal="aluminium" aria-busy="true" aria-label="Aluminium price today">
     <div class="wrap price-bar-row">
       <span class="pb-badge" aria-hidden="true"><span class="pb-num">13</span><span class="pb-sym">Al</span></span>
       <span class="pb-label">Aluminium today</span>
-      <span class="pb-price" data-pb="price"></span>
+      <span class="pb-price" data-pb="price"><span class="pb-skel" aria-hidden="true"></span><span class="sr-only">Loading today's price</span></span>
       <span class="pb-change" data-pb="change"></span>
       <span class="pb-note">Market price (LME) · updated every morning</span>
       <button class="pb-toggle" type="button" aria-expanded="false" aria-controls="aluminium-trend">View trend <span aria-hidden="true">▾</span></button>
@@ -136,17 +138,14 @@
         <div class="feature">
           <h3>Sell aluminium scrap</h3>
           <p>Sections, sheet, cans, cast parts and more.</p>
-          <button class="text-link" type="button" data-query="aluminium">Enquire →</button>
         </div>
         <div class="feature">
           <h3>Buy aluminium</h3>
           <p>Aluminium stock and ingots for industry.</p>
-          <button class="text-link" type="button" data-query="aluminium">Enquire →</button>
         </div>
         <div class="feature">
           <h3>Custom castings</h3>
           <p>Aluminium parts made to your drawing or sample.</p>
-          <button class="text-link" type="button" data-query="aluminium">Enquire →</button>
         </div>
       </div>
       <p class="cross"><a class="text-link" href="/metals/copper/">Looking for copper instead? →</a></p>
