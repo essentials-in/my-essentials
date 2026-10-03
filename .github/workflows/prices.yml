@@ -1,0 +1,73 @@
+# Daily metal prices for the Copper and Aluminium pages.
+# Saves prices.json to the separate `prices` branch — NOT main — so Netlify never
+# redeploys for a price update. The website reads the file straight from GitHub.
+name: Update metal prices
+
+on:
+  schedule:
+    - cron: '30 2 * * *'   # 8:00 am IST every day (weekends/holidays repeat the last close and are skipped)
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/prices.yml
+      - scripts/update-prices.mjs
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: 'Also fetch this many past days (one-time history fill, e.g. 365). Leave 0 for a normal run.'
+        required: false
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metal-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website code (for the script)
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check out the prices branch (create it the first time)
+        run: |
+          git config user.name  "essentials-price-bot"
+          git config user.email "essentials-price-bot@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin prices >/dev/null; then
+            git fetch origin prices
+            git worktree add -B prices data origin/prices
+          else
+            git worktree add --detach data
+            cd data
+            git checkout --orphan prices
+            git rm -rfq .
+            # Tell Netlify to skip any build of this branch (no deploy credits used)
+            printf '[build]\n  ignore = "exit 0"\n' > netlify.toml
+            printf 'Daily metal prices for myessentials.co.in — written by .github/workflows/prices.yml on main.\n' > README.md
+          fi
+
+      - name: Fetch prices
+        env:
+          METALS_DEV_API_KEY: ${{ secrets.METALS_DEV_API_KEY }}
+        run: |
+          BACKFILL="${{ github.event.inputs.backfill || 0 }}"
+          # First ever run: no price file yet, so load a year of history automatically
+          if [ ! -f data/prices.json ]; then BACKFILL=365; fi
+          node scripts/update-prices.mjs data/prices.json --backfill "$BACKFILL"
+
+      - name: Save to the prices branch
+        working-directory: data
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git commit -m "Prices for $(date -u +%Y-%m-%d)"
+          git push origin prices
+          # Refresh the CDN copy the website reads
+          curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@prices/prices.json" || true

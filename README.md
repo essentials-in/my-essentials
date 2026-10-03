@@ -60,6 +60,14 @@ Plain HTML, CSS, and JavaScript — no build step, no dependencies.
 
 Hosted on Netlify (`netlify.toml` handles the www redirect and headers).
 
+### Metal price trend (Copper & Aluminium pages)
+
+- `assets/price-trend.js` draws the interactive price graph (plain SVG, no libraries).
+- Prices come from `prices.json` on the separate **`prices`** branch, read straight from GitHub — so daily price updates never trigger a Netlify deploy.
+- `.github/workflows/prices.yml` runs every day at 8:00 am IST, fetches LME prices from metals.dev (`scripts/update-prices.mjs`), converts them to ₹/kg and commits to the `prices` branch.
+- Needs the repository secret **`METALS_DEV_API_KEY`**. To fill a year of history once, run the workflow manually (Actions → Update metal prices → Run workflow) with `backfill` = `365`.
+- If the price file can't be loaded, the graph section stays hidden.
+
 ---
 
 © 2026 Essentials. All rights reserved.
