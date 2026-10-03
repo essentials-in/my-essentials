@@ -101,6 +101,11 @@ async function backfill(store, days) {
       }
     }
     console.log(`Backfilled ${ymd(chunkStart)} → ${ymd(chunkEnd)}`);
+    if (added === 0) {
+      // Plans without base-metal history: stop instead of spending more requests.
+      console.warn("WARN: this plan returns no copper/aluminium history — backfill stopped after one request.");
+      break;
+    }
   }
   console.log(`Backfill wrote ${added} values.`);
 }

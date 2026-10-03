@@ -58,9 +58,8 @@ jobs:
           METALS_DEV_API_KEY: ${{ secrets.METALS_DEV_API_KEY }}
         run: |
           BACKFILL="${{ github.event.inputs.backfill || 0 }}"
-          # No history yet (first run, or an earlier fill failed): load a year automatically
+          # History is only fetched when requested by hand (each 30 days costs one API request)
           DAYS=$( [ -f data/prices.json ] && node -e "console.log(require(\"./data/prices.json\").copper.length)" || echo 0 )
-          if [ "$DAYS" -lt 30 ] && [ "$BACKFILL" = "0" ]; then BACKFILL=365; fi
           echo "Run $(date -u +%FT%TZ) · stored days: $DAYS · backfill: $BACKFILL" > data/last-run.log
           # Output is kept in last-run.log on the prices branch (no secrets in it) for troubleshooting
           node scripts/update-prices.mjs data/prices.json --backfill "$BACKFILL" 2>&1 | tee -a data/last-run.log
