@@ -13,8 +13,8 @@ const KEY = process.env.METALS_DEV_API_KEY;
 const GRAMS_PER_TROY_OUNCE = 31.1034768;
 // API field -> our name, plus a sanity range in ₹/kg (anything outside is treated as bad data)
 const METALS = {
-  copper:    { field: 'lme_copper',   min: 200, max: 5000 },
-  aluminium: { field: 'lme_aluminum', min: 50,  max: 1500 }
+  copper:    { field: 'lme_copper',   alt: 'copper',   min: 200, max: 5000 },
+  aluminium: { field: 'lme_aluminum', alt: 'aluminum', min: 50,  max: 1500 }
 };
 
 const file = process.argv[2];
@@ -74,19 +74,25 @@ function upsert(series, date, value) {
 async function backfill(store, days) {
   const end = new Date();
   end.setUTCDate(end.getUTCDate() - 1);
-  let added = 0;
+  let added = 0, logged = false;
   // The timeseries endpoint allows at most 30 days per request.
   for (let offset = 0; offset < days; offset += 30) {
     const chunkEnd = new Date(end); chunkEnd.setUTCDate(end.getUTCDate() - offset);
     const chunkStart = new Date(chunkEnd); chunkStart.setUTCDate(chunkEnd.getUTCDate() - Math.min(29, days - offset - 1));
     const body = await api('/timeseries', { start_date: ymd(chunkStart), end_date: ymd(chunkEnd) });
     const rates = body.rates || body;
+    if (offset === 0) console.log(`timeseries sample: ${Object.keys(rates).length} dates, first = ${Object.keys(rates)[0]}`);
     for (const [date, day] of Object.entries(rates)) {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !day || !day.metals) continue;
       const fx = inrPerUsd(day.currencies);
       if (!fx) continue;
-      for (const [metal, { field }] of Object.entries(METALS)) {
-        const usdPerToz = Number(day.metals[field]);
+      for (const [metal, { field, alt }] of Object.entries(METALS)) {
+        // Historical data may only carry the spot field, not the LME one.
+        const usdPerToz = Number(day.metals[field] ?? day.metals[alt]);
+        if (!isFinite(usdPerToz) && !logged) {
+          logged = true;
+          console.warn(`WARN: ${date} has no ${field}/${alt}. Metal fields present: ${Object.keys(day.metals).join(", ")}`);
+        }
         const v = checked(metal, usdPerToz * fx * (1000 / GRAMS_PER_TROY_OUNCE), date);
         if (v != null) { upsert(store[metal], date, v); added++; }
       }

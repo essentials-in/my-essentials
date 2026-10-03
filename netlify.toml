@@ -1,3 +1,8 @@
+# Skip the deploy when a push only touches the price job, its script or the README
+# (they are not part of the website). Exit code 0 = skip, 1 = build.
+[build]
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)scripts' ':(exclude).github' ':(exclude)README.md'"
+
 # Redirect www -> non-www (canonical: https://myessentials.co.in)
 [[redirects]]
   from = "https://www.myessentials.co.in/*"

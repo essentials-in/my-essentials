@@ -58,8 +58,9 @@ jobs:
           METALS_DEV_API_KEY: ${{ secrets.METALS_DEV_API_KEY }}
         run: |
           BACKFILL="${{ github.event.inputs.backfill || 0 }}"
-          # First ever run: no price file yet, so load a year of history automatically
-          if [ ! -f data/prices.json ]; then BACKFILL=365; fi
+          # No history yet (first run, or an earlier fill failed): load a year automatically
+          DAYS=$( [ -f data/prices.json ] && node -e "console.log(require(\"./data/prices.json\").copper.length)" || echo 0 )
+          if [ "$DAYS" -lt 30 ] && [ "$BACKFILL" = "0" ]; then BACKFILL=365; fi
           node scripts/update-prices.mjs data/prices.json --backfill "$BACKFILL"
 
       - name: Save to the prices branch
