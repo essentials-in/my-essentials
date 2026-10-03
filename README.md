@@ -65,7 +65,8 @@ Hosted on Netlify (`netlify.toml` handles the www redirect and headers).
 - `assets/price-trend.js` draws the interactive price graph (plain SVG, no libraries).
 - Prices come from `prices.json` on the separate **`prices`** branch, read straight from GitHub — so daily price updates never trigger a Netlify deploy.
 - `.github/workflows/prices.yml` runs every day at 8:00 am IST, fetches LME prices from metals.dev (`scripts/update-prices.mjs`), converts them to ₹/kg and commits to the `prices` branch.
-- Needs the repository secret **`METALS_DEV_API_KEY`**. To fill a year of history once, run the workflow manually (Actions → Update metal prices → Run workflow) with `backfill` = `365`.
+- Needs the repository secret **`METALS_DEV_API_KEY`**. The daily job uses one request a day (free plan: 100/month).
+- History: the metals.dev free plan has no copper/aluminium history, so past prices were loaded once with `scripts/backfill-history.mjs` (LME cash settlement via westmetall.com, USD/INR via ECB). It never overwrites days the daily job already saved. To re-run: check out the `prices` branch and run `node scripts/backfill-history.mjs prices.json 365`, then commit.
 - If the price file can't be loaded, the graph section stays hidden.
 
 ---
