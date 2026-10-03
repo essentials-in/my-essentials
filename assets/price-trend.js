@@ -1,8 +1,9 @@
 /* Essentials — metal price trend (copper / aluminium).
    Reads prices.json from the `prices` branch on GitHub (updated daily by
    .github/workflows/prices.yml), so price updates never redeploy the site.
-   Markup: <section class="price-section" hidden><div class="price-trend" data-metal="copper" data-name="Copper"></div></section>
-   If the data can't load, the section simply stays hidden. */
+   Markup: a slim <section class="price-bar" data-metal="copper" hidden> under the header shows today's
+   price; its "View trend" button opens .price-panel holding <div class="price-trend" data-metal="copper">.
+   The graph is drawn on first open (it needs a visible width). If the data can't load, the bar stays hidden. */
 (function(){
   'use strict';
   // GitHub raw first: it refreshes within 5 minutes. jsDelivr can lag up to 12h, so it is only a backup.
@@ -48,12 +49,35 @@
   }
 
   getJSON(0).then(function(data){
-    roots.forEach(function(root){
-      var series = data[root.getAttribute('data-metal')];
+    document.querySelectorAll('.price-bar[data-metal]').forEach(function(bar){
+      var series = data[bar.getAttribute('data-metal')];
       if (!Array.isArray(series) || series.length < 2) return;
-      build(root, series, data.updated);
-      var section = root.closest('.price-section');
-      if (section) section.hidden = false;
+      var last = series[series.length - 1], prev = series[series.length - 2];
+
+      var price = bar.querySelector('[data-pb="price"]');
+      price.textContent = money(last[1]);
+      price.appendChild(el('span', 'pb-unit', ' /kg'));
+      var diff = last[1] - prev[1], up = diff >= 0;
+      var ch = bar.querySelector('[data-pb="change"]');
+      ch.textContent = (up ? '▲ ' : '▼ ') + Math.abs(diff / prev[1] * 100).toFixed(1) + '% today';
+      ch.classList.add(up ? 'is-up' : 'is-down');
+
+      var btn = bar.querySelector('.pb-toggle');
+      var panel = bar.querySelector('.price-panel');
+      var root = panel && panel.querySelector('.price-trend[data-metal]');
+      var built = false;
+      function setOpen(open){
+        panel.hidden = !open;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.firstChild.nodeValue = open ? 'Hide trend ' : 'View trend ';
+        btn.lastChild.textContent = open ? '▴' : '▾';
+        if (open && !built && root) { built = true; build(root, series, data.updated); }
+      }
+      if (btn && panel) {
+        btn.addEventListener('click', function(){ setOpen(panel.hidden); });
+        if (location.hash === '#' + panel.id) setOpen(true); // shared link straight to the trend
+      }
+      bar.hidden = false;
     });
   }).catch(function(){ /* stay hidden */ });
 

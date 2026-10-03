@@ -283,8 +283,24 @@ footer address{font-style:normal}
 }
 
 /* ===== METAL PRICE TREND (assets/price-trend.js) ===== */
-.price-section{padding:56px 0 0}
-@media(min-width:720px){.price-section{padding-top:64px}}
+/* Slim price bar under the header (Copper / Aluminium pages); "View trend" opens the full card */
+.price-bar{--pt-up:#1A7F4B;--pt-down:#B42318;background:var(--pb-bg);color:var(--pb-ink);border-bottom:1px solid var(--pb-line)}
+.price-bar[data-metal="copper"]{--pb-bg:#F6EBE1;--pb-ink:#2E1809;--pb-line:#E6CDB8;--pb-soft:#6B4A33;--pb-badge:#B87333;--pb-badge-ink:#2E1809;--pb-badge-line:#B87333}
+.price-bar[data-metal="aluminium"]{--pb-bg:#EEF1F4;--pb-ink:#1E252C;--pb-line:#D3DAE0;--pb-soft:#5F6B77;--pb-badge:#FFFFFF;--pb-badge-ink:#1E252C;--pb-badge-line:#A9B3BD}
+[data-theme="dark"] .price-bar{--pb-bg:#1e2329;--pb-ink:#e9e6df;--pb-line:#2b3138;--pb-soft:#a9a49a;--pt-up:#4CC38A;--pt-down:#F97066}
+.price-bar-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-height:58px;padding-block:10px}
+.pb-badge{width:34px;height:34px;flex:none;border-radius:4px;padding:3px 4px;display:flex;flex-direction:column;justify-content:space-between;background:var(--pb-badge);color:var(--pb-badge-ink);border:1px solid var(--pb-badge-line)}
+.pb-num{font-size:.47rem;font-weight:600;line-height:1}
+.pb-sym{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.15rem;line-height:.8}
+.pb-label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.pb-price{font-size:1.06rem;font-weight:600;font-variant-numeric:tabular-nums}
+.pb-unit{font-size:.75rem;font-weight:500;color:var(--pb-soft)}
+.pb-change{font-size:.82rem;font-weight:600}
+.pb-note{font-size:.78rem;color:var(--pb-soft)}
+@media(max-width:719px){.pb-note{display:none}}
+.pb-toggle{margin-left:auto;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;font:600 .82rem "Inter",sans-serif;cursor:pointer}
+.pb-toggle:hover{background:var(--pb-line)}
+.price-panel{padding:6px 0 28px}
 .price-trend{--pt-line:#A8642B;--pt-up:#1A7F4B;--pt-down:#B42318;--pt-grid:#ebe4d8;--pt-tip:#2a2b28;--pt-tip-ink:#faf6ef;
   background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:16px}
 .price-trend[data-metal="aluminium"]{--pt-line:#5F6B77}

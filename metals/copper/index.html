@@ -94,6 +94,19 @@
 </header>
 
 <main id="main">
+  <section class="price-bar" data-metal="copper" hidden aria-label="Copper price today">
+    <div class="wrap price-bar-row">
+      <span class="pb-badge" aria-hidden="true"><span class="pb-num">29</span><span class="pb-sym">Cu</span></span>
+      <span class="pb-label">Copper today</span>
+      <span class="pb-price" data-pb="price"></span>
+      <span class="pb-change" data-pb="change"></span>
+      <span class="pb-note">Market price (LME) · updated every morning</span>
+      <button class="pb-toggle" type="button" aria-expanded="false" aria-controls="copper-trend">View trend <span aria-hidden="true">▾</span></button>
+    </div>
+    <div class="price-panel" id="copper-trend" hidden>
+      <div class="wrap"><div class="price-trend" data-metal="copper" data-name="Copper"></div></div>
+    </div>
+  </section>
   <section class="space-hero copper">
     <div class="wrap">
       <div class="hero-copy">
@@ -113,10 +126,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="price-section" hidden aria-label="Copper market price">
-    <div class="wrap"><div class="price-trend" data-metal="copper" data-name="Copper"></div></div>
   </section>
 
   <section class="section accent-copper" aria-labelledby="cuTitle">

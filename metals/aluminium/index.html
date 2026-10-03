@@ -94,6 +94,19 @@
 </header>
 
 <main id="main">
+  <section class="price-bar" data-metal="aluminium" hidden aria-label="Aluminium price today">
+    <div class="wrap price-bar-row">
+      <span class="pb-badge" aria-hidden="true"><span class="pb-num">13</span><span class="pb-sym">Al</span></span>
+      <span class="pb-label">Aluminium today</span>
+      <span class="pb-price" data-pb="price"></span>
+      <span class="pb-change" data-pb="change"></span>
+      <span class="pb-note">Market price (LME) · updated every morning</span>
+      <button class="pb-toggle" type="button" aria-expanded="false" aria-controls="aluminium-trend">View trend <span aria-hidden="true">▾</span></button>
+    </div>
+    <div class="price-panel" id="aluminium-trend" hidden>
+      <div class="wrap"><div class="price-trend" data-metal="aluminium" data-name="Aluminium"></div></div>
+    </div>
+  </section>
   <section class="space-hero aluminium">
     <div class="wrap">
       <div class="hero-copy">
@@ -113,10 +126,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="price-section" hidden aria-label="Aluminium market price">
-    <div class="wrap"><div class="price-trend" data-metal="aluminium" data-name="Aluminium"></div></div>
   </section>
 
   <section class="section accent-aluminium" aria-labelledby="alTitle">
