@@ -5,9 +5,10 @@
    If the data can't load, the section simply stays hidden. */
 (function(){
   'use strict';
+  // GitHub raw first: it refreshes within 5 minutes. jsDelivr can lag up to 12h, so it is only a backup.
   var SOURCES = [
-    'https://cdn.jsdelivr.net/gh/essentials-in/my-essentials@prices/prices.json',
-    'https://raw.githubusercontent.com/essentials-in/my-essentials/prices/prices.json'
+    'https://raw.githubusercontent.com/essentials-in/my-essentials/prices/prices.json',
+    'https://cdn.jsdelivr.net/gh/essentials-in/my-essentials@prices/prices.json'
   ];
   var RANGES = [['1M', 22], ['3M', 66], ['6M', 130], ['1Y', 260]]; // trading days
   var SVGNS = 'http://www.w3.org/2000/svg';
