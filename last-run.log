@@ -1,20 +1,4 @@
-Run 2026-10-03T19:40:56Z · stored days: 1 · backfill: 365
-timeseries: status=success keys=status,currency,unit,start_date,end_date,rates dates=30 firstDay={"currencies":{"AUD":0.71983,"BRL":0.1955,"CAD":0.7243,"CHF":1.2385,"CNY":0.14868,"EUR":1.16249,"GBP":1.3525,"HKD":0.12751,"INR":0.010566,"JPY":0.006413,"SGD":0.7888,"USD":1},"date":"2026-09-03","metals":{"gold":4472.965,"palladium":1417.594,"platinum":1824.7,"silver":66.9785}}
-WARN: 2026-09-03 has no lme_copper/copper. Metal fields present: gold, palladium, platinum, silver
-Backfilled 2026-09-03 → 2026-10-02
-Backfilled 2026-08-04 → 2026-09-02
-Backfilled 2026-07-05 → 2026-08-03
-Backfilled 2026-06-05 → 2026-07-04
-Backfilled 2026-05-06 → 2026-06-04
-Backfilled 2026-04-06 → 2026-05-05
-Backfilled 2026-03-07 → 2026-04-05
-Backfilled 2026-02-05 → 2026-03-06
-Backfilled 2026-01-06 → 2026-02-04
-Backfilled 2025-12-07 → 2026-01-05
-Backfilled 2025-11-07 → 2025-12-06
-Backfilled 2025-10-08 → 2025-11-06
-Backfilled 2025-10-03 → 2025-10-07
-Backfill wrote 0 values.
+Run 2026-10-03T19:42:00Z · stored days: 1 · backfill: 0
 copper 2026-10-03: ₹1377.3/kg
 aluminium 2026-10-03: ₹300.3/kg
 Saved data/prices.json: copper 1 days, aluminium 1 days.
