@@ -1,4 +1,5 @@
-Run 2026-11-14T09:12:51Z · stored days: 293 · backfill: 0
-copper 2026-11-14: ₹1276.8/kg
-aluminium 2026-11-14: ₹284.5/kg
+Run 2026-11-15T09:42:26Z · stored days: 294 · backfill: 0
+copper: unchanged (holiday?), skipped.
+aluminium: unchanged (holiday?), skipped.
+No new prices today.
 Saved data/prices.json: copper 294 days, aluminium 293 days.
